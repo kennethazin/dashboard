@@ -192,7 +192,7 @@ function ForecastCard() {
               <Icon src={assets.forecastCaret} className="h-3 w-3" />
             </button>
             <div className="flex items-center gap-1">
-              <span className="text-[30px] leading-[16px] font-medium text-[#42413c]">2.0k</span>
+              <span className="text-[20px] leading-[16px] font-medium text-[#42413c]">2.0k</span>
               <span className="pt-1 text-[10px] font-light text-[#747474]">tonnes</span>
             </div>
             <div className="flex items-center gap-1">
