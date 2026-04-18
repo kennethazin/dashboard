@@ -92,9 +92,9 @@ const forecastData = [
 ]
 
 const planningRows = [
-  ["Cheddar Mild", "2.9k", "2.7k", "2.7k", "2.6k", "80.6%", "80.6%"],
-  ["Cheddar Mature", "-", "-", "-", "-", "5.2%", "5.2%"],
-  ["Butter Unsalted Block", "-", "-", "-", "-", "4.6%", "4.6%"],
+  ["Cheddar Mild", "2.9k", "2.7k", "2.7k", "2.6k", "-", "-"],
+  ["Cheddar Mature", "-", "-", "-", "-", "-", "-"],
+  ["Butter Unsalted Block", "-", "-", "-", "-", "-", "-"],
   ["SMP Medium Heat", "-", "-", "-", "-", "-", "-"],
   ["WPC80 Instant", "-", "-", "-", "-", "-", "-"],
   ["Rennet Casein", "-", "-", "-", "-", "-", "-"],
@@ -260,7 +260,7 @@ function PlanningCard() {
         <table className="min-w-[1123px] w-full bg-white text-left">
           <thead className="bg-[#fafafa] text-[12px] uppercase leading-[18px] text-[#5e5e5e]">
             <tr>
-              {["Product", "Jan", "Feb", "Apr", "May", "2021", "2020"].map((h) => (
+              {["Product", "Jan", "Feb", "Apr", "May", "Jun", "Jul"].map((h) => (
                 <th key={h} className="h-[44px] border-b border-[#e2e2e2] px-6 font-normal">{h}</th>
               ))}
             </tr>
