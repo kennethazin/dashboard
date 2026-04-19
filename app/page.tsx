@@ -50,7 +50,7 @@ import {
 } from "recharts"
 
 
-type AssistantMode = "sidebar" | "float"
+type AssistantMode = "sidebar" | "float" | "closed"
 
 const assets = {
   sidebarLogo: "/daisy-logo.svg",
@@ -507,13 +507,15 @@ function LeftSidebar({
   onToggle,
   onAssistantClick,
   width,
-  onResizeStart
+  onResizeStart,
+  assistantMode
 }: {
   collapsed: boolean;
   onToggle: () => void;
   onAssistantClick: () => void;
   width: number;
-  onResizeStart: (e: React.MouseEvent) => void
+  onResizeStart: (e: React.MouseEvent) => void;
+  assistantMode: AssistantMode;
 }) {
   const [isHistoryVisible, setIsHistoryVisible] = useState(true)
   const [isCollapsedHistoryOpen, setIsCollapsedHistoryOpen] = useState(false)
@@ -535,7 +537,7 @@ function LeftSidebar({
 
           <div className="space-y-2">
             <button className="flex w-full justify-center rounded-[8px] px-3 py-2 hover:bg-white/40 transition-colors" title="Home"><House size={20} weight="light" color="#6d6963" /></button>
-            <button onClick={onAssistantClick} className="flex w-full justify-center rounded-[8px] px-3 py-2 cursor-pointer hover:bg-white/40 transition-colors" title="AI Assistant"><img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" /></button>
+            <button onClick={onAssistantClick} className={`flex w-full justify-center rounded-[8px] px-3 py-2 cursor-pointer transition-colors ${assistantMode !== "closed" ? "bg-white/60 shadow-sm" : "hover:bg-white/40"}`} title="AI Assistant"><img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" /></button>
           </div>
 
           <Divider />
@@ -601,7 +603,7 @@ function LeftSidebar({
 
         <div className="space-y-2">
           <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c] hover:bg-white/40 transition-colors" title="Home"><House size={20} weight="light" color="#6d6963" />Home</button>
-          <button onClick={onAssistantClick} className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c] cursor-pointer hover:bg-white/40 transition-colors" title="AI Assistant"> <img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" />AI Assistant</button>
+          <button onClick={onAssistantClick} className={`flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c] cursor-pointer transition-colors ${assistantMode !== "closed" ? "bg-white/60 shadow-sm" : "hover:bg-white/40"}`} title="AI Assistant"> <img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" />AI Assistant</button>
         </div>
 
         <Divider />
@@ -800,10 +802,12 @@ function CenterHeader({ selectedProduct, onSelect }: { selectedProduct: string; 
 
 function ChatSidebar({
   onFloat,
+  onClose,
   chatInput,
   setChatInput,
 }: {
   onFloat: () => void
+  onClose: () => void
   chatInput: string
   setChatInput: (value: string) => void
 }) {
@@ -842,7 +846,7 @@ function ChatSidebar({
             <button onClick={onFloat} className="cursor-pointer hover:opacity-70" title="Floating Mode">
               <PictureInPicture size={20} weight="light" color="#42413c" />
             </button>
-            <button className="cursor-pointer hover:opacity-70" title="Close Assistant">
+            <button onClick={onClose} className="cursor-pointer hover:opacity-70" title="Close Assistant">
               <X size={20} weight="light" color="#42413c" />
             </button>
           </div>
@@ -883,14 +887,17 @@ function ChatSidebar({
 
 function FloatingAssistantDock({
   onSidebar,
+  onClose,
   chatInput,
   setChatInput,
 }: {
   onSidebar: () => void
+  onClose: () => void
   chatInput: string
   setChatInput: (value: string) => void
 }) {
   const [historyOpen, setHistoryOpen] = useState(false)
+
   return (
     <div className="fixed bottom-5 right-5 z-[50] w-[392px] rounded-[12px] border border-white/10 bg-[#42413c] p-1 shadow-2xl backdrop-blur-sm">
       <div className="flex items-center justify-between rounded-[10px] bg-[#42413c] px-3 py-2">
@@ -924,7 +931,7 @@ function FloatingAssistantDock({
           <button onClick={onSidebar} className="cursor-pointer hover:opacity-70" title="Dock to Sidebar">
             <PictureInPicture size={20} weight="light" color="white" />
           </button>
-          <button className="cursor-pointer hover:opacity-70" title="Close Assistant">
+          <button onClick={onClose} className="cursor-pointer hover:opacity-70" title="Close Assistant">
             <X size={20} weight="light" color="white" />
           </button>
         </div>
@@ -1023,7 +1030,16 @@ export default function Page() {
               setSidebarWidth(62)
             }
           }}
-          onAssistantClick={() => setAssistantMode((m) => (m === "sidebar" ? "float" : "sidebar"))}
+          onAssistantClick={() => {
+            if (assistantMode === "closed") {
+              setAssistantMode("float")
+            } else if (assistantMode === "float") {
+              setAssistantMode("sidebar")
+            } else {
+              setAssistantMode("closed")
+            }
+          }}
+          assistantMode={assistantMode}
         />
 
         <section className="flex h-full flex-1 flex-col overflow-hidden">
@@ -1039,10 +1055,10 @@ export default function Page() {
         </section>
 
         {assistantMode === "sidebar" && (
-          <ChatSidebar onFloat={() => setAssistantMode("float")} chatInput={chatInput} setChatInput={setChatInput} />
+          <ChatSidebar onFloat={() => setAssistantMode("float")} onClose={() => setAssistantMode("closed")} chatInput={chatInput} setChatInput={setChatInput} />
         )}
         {assistantMode === "float" && (
-          <FloatingAssistantDock onSidebar={() => setAssistantMode("sidebar")} chatInput={chatInput} setChatInput={setChatInput} />
+          <FloatingAssistantDock onSidebar={() => setAssistantMode("sidebar")} onClose={() => setAssistantMode("closed")} chatInput={chatInput} setChatInput={setChatInput} />
         )}
       </div>
     </main>
