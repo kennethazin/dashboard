@@ -960,7 +960,7 @@ export default function Page() {
   const [collapsed, setCollapsed] = useState(false)
   const [sidebarWidth, setSidebarWidth] = useState(204)
   const [isResizing, setIsResizing] = useState(false)
-  const [assistantMode, setAssistantMode] = useState<AssistantMode>("float")
+  const [assistantMode, setAssistantMode] = useState<AssistantMode>("closed")
   const [chatInput, setChatInput] = useState("")
   const [selectedProduct, setSelectedProduct] = useState(planningItems[0].name)
 
@@ -1032,9 +1032,9 @@ export default function Page() {
           }}
           onAssistantClick={() => {
             if (assistantMode === "closed") {
-              setAssistantMode("float")
-            } else if (assistantMode === "float") {
               setAssistantMode("sidebar")
+            } else if (assistantMode === "sidebar") {
+              setAssistantMode("float")
             } else {
               setAssistantMode("closed")
             }
