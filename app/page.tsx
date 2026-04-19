@@ -33,6 +33,8 @@ import {
   ShareNetwork,
   FloppyDisk,
   Layout,
+  BellRinging,
+  Sparkle,
 } from "@phosphor-icons/react"
 import {
   Area,
@@ -470,7 +472,7 @@ function LeftSidebar({
         />
         <div className="flex min-h-0 flex-1 flex-col gap-8">
           <div className="flex w-full flex-col items-center gap-4">
-            <button onClick={onToggle} className="rotate-180 p-2 cursor-pointer hover:bg-white/40 rounded-full transition-colors" title="Expand Sidebar">
+            <button onClick={onToggle} className="rotate-180 p-2 cursor-pointer hover:bg-white/40 rounded-lg transition-colors" title="Expand Sidebar">
               <CaretDoubleLeft size={14} weight="light" color="#7a766f" />
             </button>
             <Icon src={assets.sidebarLogo} className="size-[38px]" />
@@ -537,7 +539,7 @@ function LeftSidebar({
       <div className="flex min-h-0 flex-1 flex-col gap-8">
         <div className="flex items-center justify-between">
           <Icon src={assets.sidebarLogo} className="size-[38px]" />
-          <button onClick={onToggle} className="p-2 cursor-pointer hover:bg-white/40 rounded-full transition-colors" title="Collapse Sidebar">
+          <button onClick={onToggle} className="p-2 cursor-pointer hover:bg-white/40 rounded-lg transition-colors" title="Collapse Sidebar">
             <CaretDoubleLeft size={14} weight="light" color="#7a766f" />
           </button>
         </div>
@@ -587,6 +589,7 @@ function CenterHeader({ selectedProduct, onSelect }: { selectedProduct: string; 
   const [isOpen, setIsOpen] = useState(false)
   const [isExportOpen, setIsExportOpen] = useState(false)
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
 
   return (
     <header className="relative h-[58px] border-b border-[#ebe8e4] bg-white px-4 py-3 z-30">
@@ -650,6 +653,60 @@ function CenterHeader({ selectedProduct, onSelect }: { selectedProduct: string; 
               </div>
             )}
           </div>
+
+          <div className="relative">
+            <button 
+              onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+              className="relative grid size-8 place-items-center rounded-full hover:bg-[#f5f5f5] transition-colors cursor-pointer"
+              title="Notifications"
+            >
+              <BellRinging size={20} weight="light" color="#7a766f" />
+              <div className="absolute right-1 top-1 size-2 rounded-full bg-[#069668] ring-2 ring-white" />
+            </button>
+
+            {isNotificationsOpen && (
+              <div className="absolute right-0 top-full mt-2 w-[340px] rounded-xl border border-[#ebe8e4] bg-white p-2 shadow-2xl animate-in fade-in slide-in-from-top-1 z-50">
+                <div className="flex items-center justify-between px-3 py-2 border-b border-[#f5f5f5] mb-2">
+                  <div className="flex items-center gap-2">
+                    <img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-4" />
+                    <p className="text-[12px] font-bold text-[#1a1a1a]">Daisy AI Insights</p>
+                  </div>
+                  <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-[#f5f5f5] text-[#7a766f]">3 New</span>
+                </div>
+
+                <div className="space-y-1">
+                  {[
+                    {
+                      title: "Critical Stock Warning",
+                      msg: "Butter Unsalted projected to hit zero in 12 days.",
+                      type: "warning"
+                    },
+                    {
+                      title: "Demand Spike Detected",
+                      msg: "Heavy Cream demand is 18% above Q3-26 forecast.",
+                      type: "info"
+                    },
+                    {
+                      title: "Cost Opportunity",
+                      msg: "Milk Class III futures dropped 4.2% today.",
+                      type: "success"
+                    }
+                  ].map((note, i) => (
+                    <div key={i} className="group p-3 rounded-lg hover:bg-[#f9fafb] transition-colors">
+                      <div className="flex items-start gap-3">
+                        <div className={`mt-1.5 size-1.5 shrink-0 rounded-full ${note.type === 'warning' ? 'bg-red-500' : note.type === 'success' ? 'bg-green-500' : 'bg-blue-500'}`} />
+                        <div className="space-y-0.5">
+                          <p className="text-[13px] font-semibold text-[#111827]">{note.title}</p>
+                          <p className="text-[11px] text-[#4b5563] leading-relaxed">{note.msg}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
           <div className="relative">
             <button
               onClick={() => setIsExportOpen(!isExportOpen)}
