@@ -655,7 +655,7 @@ function CenterHeader({ selectedProduct, onSelect }: { selectedProduct: string; 
           </div>
 
           <div className="relative">
-            <button 
+            <button
               onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
               className="relative grid size-8 place-items-center rounded-full hover:bg-[#f5f5f5] transition-colors cursor-pointer"
               title="Notifications"
@@ -781,9 +781,15 @@ function ChatSidebar({
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Plus size={20} weight="light" color="#42413c" className="cursor-pointer hover:opacity-70" title="New Chat" />
-            <button onClick={onFloat} className="cursor-pointer hover:opacity-70" title="Floating Mode"><PictureInPicture size={20} weight="light" color="#42413c" /></button>
-            <X size={20} weight="light" color="#42413c" className="cursor-pointer hover:opacity-70" title="Close Assistant" />
+            <button className="cursor-pointer hover:opacity-70" title="New Chat">
+              <Plus size={20} weight="light" color="#42413c" />
+            </button>
+            <button onClick={onFloat} className="cursor-pointer hover:opacity-70" title="Floating Mode">
+              <PictureInPicture size={20} weight="light" color="#42413c" />
+            </button>
+            <button className="cursor-pointer hover:opacity-70" title="Close Assistant">
+              <X size={20} weight="light" color="#42413c" />
+            </button>
           </div>
         </div>
 
@@ -857,9 +863,15 @@ function FloatingAssistantDock({
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <Plus size={20} weight="light" color="white" className="cursor-pointer hover:opacity-70" title="New Chat" />
-          <button onClick={onSidebar} className="cursor-pointer hover:opacity-70" title="Dock to Sidebar"><PictureInPicture size={20} weight="light" color="white" /></button>
-          <X size={20} weight="light" color="white" className="cursor-pointer hover:opacity-70" title="Close Assistant" />
+          <button className="cursor-pointer hover:opacity-70" title="New Chat">
+            <Plus size={20} weight="light" color="white" />
+          </button>
+          <button onClick={onSidebar} className="cursor-pointer hover:opacity-70" title="Dock to Sidebar">
+            <PictureInPicture size={20} weight="light" color="white" />
+          </button>
+          <button className="cursor-pointer hover:opacity-70" title="Close Assistant">
+            <X size={20} weight="light" color="white" />
+          </button>
         </div>
       </div>
 
