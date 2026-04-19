@@ -2,7 +2,34 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useState } from "react"
-import { PaperPlaneTilt } from "@phosphor-icons/react"
+import {
+  BookOpen,
+  CalendarDots,
+  CaretDoubleLeft,
+  CaretDown,
+  CaretLeft,
+  CaretRight,
+  ChartPieSlice,
+  ClockCounterClockwise,
+  CornersIn,
+  CurrencyCircleDollar,
+  DotsThree,
+  DownloadSimple,
+  FileText,
+  FlowArrow,
+  GearSix,
+  Globe,
+  House,
+  Infinity as InfinityIcon,
+  Microphone,
+  Package,
+  PaperPlaneTilt,
+  PictureInPicture,
+  Plus,
+  Question,
+  X,
+  BuildingOfficeIcon,
+} from "@phosphor-icons/react"
 import {
   Bar,
   CartesianGrid,
@@ -15,10 +42,11 @@ import {
   YAxis,
 } from "recharts"
 
+
 type AssistantMode = "sidebar" | "float"
 
 const assets = {
-  sidebarLogo: "https://www.figma.com/api/mcp/asset/d845afd3-45d8-458e-9f5f-ad930354feb4",
+  sidebarLogo: "/daisy-logo.svg",
   sidebarCollapse: "https://www.figma.com/api/mcp/asset/1b35c725-a4cc-4101-a389-bb53a8451299",
   sidebarExpand: "https://www.figma.com/api/mcp/asset/5c458a0c-5759-4653-8791-c7cb3e6bd8b8",
   divider: "https://www.figma.com/api/mcp/asset/350d7aa2-05bc-4fc5-874e-d474df8432f4",
@@ -56,7 +84,7 @@ const assets = {
   chatPlus: "https://www.figma.com/api/mcp/asset/502e641d-34e6-40fb-aac1-9630b2266028",
   chatPip: "https://www.figma.com/api/mcp/asset/7b53a1b1-f4a1-4175-8077-691579c7c870",
   chatX: "https://www.figma.com/api/mcp/asset/de03f674-7c59-429e-8ee5-1864c3543f83",
-  chatLogo: "https://www.figma.com/api/mcp/asset/77fe5354-485d-413d-b920-a2eea6ad71cb",
+  chatLogo: "/daisy-ai.svg",
   chatBook: "https://www.figma.com/api/mcp/asset/d3847953-252c-4dfd-80aa-366123e4e29f",
   chatFlow: "https://www.figma.com/api/mcp/asset/3ed0ede4-b5f7-4660-b019-2e0a9102bb8c",
   chatFile: "https://www.figma.com/api/mcp/asset/e6fda36f-6430-4624-b0df-99e46ce56e00",
@@ -141,7 +169,7 @@ function DemandOverviewCard() {
         <div className="space-y-[2px]">
           <div className="flex items-center gap-1">
             <h3 className="text-[16px] font-medium leading-none text-black">Demand Overview</h3>
-            <Icon src={assets.question} className="h-4 w-4" />
+            <Question size={16} weight="light" color="#6f6b65" />
           </div>
           <p className="text-[10px] text-black/56">Monthly demand vs budget across the selected product</p>
         </div>
@@ -180,7 +208,7 @@ function ForecastCard() {
         <div className="space-y-[2px]">
           <div className="flex items-center gap-1">
             <h3 className="text-[16px] font-medium leading-none text-black">Demand Forecast</h3>
-            <Icon src={assets.forecastQuestion} className="h-4 w-4" />
+            <Question size={16} weight="light" color="#6f6b65" />
           </div>
           <p className="text-[10px] text-black/56">Track demand performance and forecasted movement overtime</p>
         </div>
@@ -189,7 +217,7 @@ function ForecastCard() {
           <div className="flex items-center gap-[10px]">
             <button className="flex h-[34px] items-center gap-4 rounded-[8px] border border-[#f5f5f5] px-3 text-[12px] text-[#42413c]">
               Total demand
-              <Icon src={assets.forecastCaret} className="h-3 w-3" />
+              <CaretDown size={12} weight="light" color="#6f6b65" />
             </button>
             <div className="flex items-center gap-1">
               <span className="text-[20px] leading-[16px] font-medium text-[#42413c]">2.0k</span>
@@ -204,10 +232,10 @@ function ForecastCard() {
           <div className="flex items-center gap-2">
             <RangeSwitch items={["1W", "4W", "3M", "6M", "1Y"]} />
             <button className="flex h-[34px] items-center gap-1 rounded-[8px] border border-[#f5f5f5] px-3 text-[10px] text-[#42413c]">
-              <Icon src={assets.forecastInfinity} className="h-4 w-4" /> CI
+              <InfinityIcon size={16} weight="light" color="#42413c" /> CI
             </button>
-            <button className="flex h-[34px] w-[34px] items-center justify-center rounded-[8px] border border-[#f5f5f5]"><Icon src={assets.forecastDownload} className="h-4 w-4" /></button>
-            <button className="flex h-[34px] items-center gap-1 rounded-[8px] border border-[#f5f5f5] px-3 text-[10px] text-[#42413c]"><Icon src={assets.forecastClose} className="h-4 w-4" /> Close</button>
+            <button className="flex h-[34px] w-[34px] items-center justify-center rounded-[8px] border border-[#f5f5f5]"><DownloadSimple size={16} weight="light" color="#42413c" /></button>
+            <button className="flex h-[34px] items-center gap-1 rounded-[8px] border border-[#f5f5f5] px-3 text-[10px] text-[#42413c]"><CornersIn size={16} weight="light" color="#42413c" /> Close</button>
           </div>
         </div>
       </div>
@@ -239,13 +267,13 @@ function PlanningCard() {
         <div className="space-y-[2px]">
           <div className="flex items-center gap-1">
             <h3 className="text-[16px] font-medium leading-none text-black">Demand Assumption Planning</h3>
-            <Icon src={assets.planningQuestion} className="h-4 w-4" />
+            <Question size={16} weight="light" color="#6f6b65" />
           </div>
           <p className="text-[10px] text-black/56">View and adjust demand overlays per SKU</p>
         </div>
         <div className="flex items-center gap-2">
-          <button className="flex h-[34px] items-center gap-4 rounded-[8px] border border-[#f5f5f5] px-3 text-[12px] text-[#42413c]"><span className="flex items-center gap-2"><Icon src={assets.planningBuilding} className="h-4 w-4" />All accounts</span><Icon src={assets.planningCaret} className="h-3 w-3" /></button>
-          <button className="flex h-[34px] items-center gap-4 rounded-[8px] border border-[#f5f5f5] px-3 text-[12px] text-[#42413c]"><span className="flex items-center gap-2"><Icon src={assets.planningPackage} className="h-4 w-4" />All SKUs</span><Icon src={assets.planningCaret} className="h-3 w-3" /></button>
+          <button className="flex h-[34px] items-center gap-4 rounded-[8px] border border-[#f5f5f5] px-3 text-[12px] text-[#42413c]"><span className="flex items-center gap-2"><BuildingOfficeIcon size={16} weight="light" color="#42413c" />All accounts</span><CaretDown size={12} weight="light" color="#6f6b65" /></button>
+          <button className="flex h-[34px] items-center gap-4 rounded-[8px] border border-[#f5f5f5] px-3 text-[12px] text-[#42413c]"><span className="flex items-center gap-2"><Package size={16} weight="light" color="#42413c" />All SKUs</span><CaretDown size={12} weight="light" color="#6f6b65" /></button>
         </div>
       </div>
 
@@ -280,9 +308,9 @@ function PlanningCard() {
 
       <div className="mt-4 flex items-center gap-[22px] px-2 py-4">
         <div className="flex items-center gap-[22px]">
-          <button className="grid size-[38px] place-items-center rounded-[10px]"><Icon src={assets.pageLeft} className="h-3 w-2" /></button>
-          <button className="flex items-center gap-3 rounded-[8px] border border-[#c6c6c6] bg-white px-3 py-3 text-[14px] text-[#303030]">1 <Icon src={assets.topChevron} className="h-2 w-3" /></button>
-          <button className="grid size-[38px] place-items-center rounded-[10px]"><Icon src={assets.pageRight} className="h-3 w-2" /></button>
+          <button className="grid size-[38px] place-items-center rounded-[10px]"><CaretLeft size={16} weight="light" color="#42413c" /></button>
+          <button className="flex items-center gap-3 rounded-[8px] border border-[#c6c6c6] bg-white px-3 py-3 text-[14px] text-[#303030]">1 <CaretDown size={12} weight="light" color="#6f6b65" /></button>
+          <button className="grid size-[38px] place-items-center rounded-[10px]"><CaretRight size={16} weight="light" color="#42413c" /></button>
         </div>
         <p className="text-[14px] text-black">1 - 1 of 1</p>
       </div>
@@ -296,28 +324,28 @@ function LeftSidebar({ collapsed, onToggle, onAssistantClick }: { collapsed: boo
       <aside className="flex h-full w-[62px] shrink-0 flex-col justify-between border-r border-[#ebe8e4] bg-[#f2f0ec] px-2 pb-2 pt-6">
         <div className="flex min-h-0 flex-1 flex-col gap-8">
           <div className="flex w-full flex-col items-center gap-4">
-            <button onClick={onToggle} className="rotate-180 p-1"><Icon src={assets.sidebarExpand} className="size-3" /></button>
+            <button onClick={onToggle} className="rotate-180 p-1 cursor-pointer"><CaretDoubleLeft size={12} weight="light" color="#7a766f" /></button>
             <Icon src={assets.sidebarLogo} className="size-[38px]" />
           </div>
 
           <div className="space-y-2">
-            <button className="flex w-full justify-center rounded-[8px] px-3 py-2"><Icon src={assets.home} className="size-5" /></button>
-            <button onClick={onAssistantClick} className="flex w-full justify-center rounded-[8px] px-3 py-2"><Icon src={assets.starFour} className="size-5" /></button>
+            <button className="flex w-full justify-center rounded-[8px] px-3 py-2"><House size={20} weight="light" color="#6d6963" /></button>
+            <button onClick={onAssistantClick} className="flex w-full justify-center rounded-[8px] px-3 py-2 cursor-pointer"><img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" /></button>
           </div>
 
           <Icon src={assets.dividerCollapsed} className="h-px w-full" />
 
           <div className="space-y-2">
-            <button className="flex w-full justify-center rounded-[8px] bg-[#27251e] p-2"><Icon src={assets.globe} className="size-5" /></button>
-            <button className="flex w-full justify-center rounded-[8px] p-2"><Icon src={assets.chartPie} className="size-5" /></button>
-            <button className="flex w-full justify-center rounded-[8px] p-2"><Icon src={assets.dollar} className="size-5" /></button>
-            <button className="flex w-full justify-center rounded-[8px] p-2"><Icon src={assets.calendar} className="size-5" /></button>
+            <button className="flex w-full justify-center rounded-[8px] bg-[#27251e] p-2"><Globe size={20} weight="light" color="white" /></button>
+            <button className="flex w-full justify-center rounded-[8px] p-2"><ChartPieSlice size={20} weight="light" color="#6d6963" /></button>
+            <button className="flex w-full justify-center rounded-[8px] p-2"><CurrencyCircleDollar size={20} weight="light" color="#6d6963" /></button>
+            <button className="flex w-full justify-center rounded-[8px] p-2"><CalendarDots size={20} weight="light" color="#6d6963" /></button>
           </div>
 
           <Icon src={assets.dividerCollapsed} className="h-px w-full" />
 
           <div className="space-y-2">
-            <button className="flex w-full justify-center rounded-[8px] px-3 py-2"><Icon src={assets.history} className="size-5" /></button>
+            <button className="flex w-full justify-center rounded-[8px] px-3 py-2"><ClockCounterClockwise size={20} weight="light" color="#6d6963" /></button>
             <div className="h-6 rounded-[8px]" />
             <div className="h-6 rounded-[8px]" />
             <div className="h-6 rounded-[8px]" />
@@ -325,7 +353,7 @@ function LeftSidebar({ collapsed, onToggle, onAssistantClick }: { collapsed: boo
           </div>
         </div>
 
-        <button className="flex w-full justify-center rounded-[8px] px-3 py-2"><Icon src={assets.settings} className="size-5" /></button>
+        <button className="flex w-full justify-center rounded-[8px] px-3 py-2"><GearSix size={20} weight="light" color="#6d6963" /></button>
       </aside>
     )
   }
@@ -335,21 +363,21 @@ function LeftSidebar({ collapsed, onToggle, onAssistantClick }: { collapsed: boo
       <div className="flex min-h-0 flex-1 flex-col gap-8">
         <div className="flex items-center justify-between">
           <Icon src={assets.sidebarLogo} className="size-[38px]" />
-          <button onClick={onToggle} className="p-1"><Icon src={assets.sidebarCollapse} className="size-2" /></button>
+          <button onClick={onToggle} className="p-1 cursor-pointer"><CaretDoubleLeft size={12} weight="light" color="#7a766f" /></button>
         </div>
 
         <div className="space-y-2">
-          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><Icon src={assets.home} className="size-5" />Home</button>
-          <button onClick={onAssistantClick} className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><Icon src={assets.starFour} className="size-5" />AI Assistant</button>
+          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><House size={20} weight="light" color="#6d6963" />Home</button>
+          <button onClick={onAssistantClick} className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c] cursor-pointer"> <img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" />AI Assistant</button>
         </div>
 
         <Icon src={assets.divider} className="h-px w-full" />
 
         <div className="space-y-2">
-          <button className="flex w-full items-center gap-2 rounded-[8px] bg-[#27251e] px-3 py-2 text-[13px] font-medium text-white"><Icon src={assets.globe} className="size-5" />Demand</button>
-          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><Icon src={assets.chartPie} className="size-5" />Supply</button>
-          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><Icon src={assets.dollar} className="size-5" />Pre-IBP</button>
-          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><Icon src={assets.calendar} className="size-5" />Master Schedule</button>
+          <button className="flex w-full items-center gap-2 rounded-[8px] bg-[#27251e] px-3 py-2 text-[13px] font-medium text-white"><Globe size={20} weight="light" color="white" />Demand</button>
+          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><ChartPieSlice size={20} weight="light" color="#6d6963" />Supply</button>
+          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><CurrencyCircleDollar size={20} weight="light" color="#6d6963" />Pre-IBP</button>
+          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><CalendarDots size={20} weight="light" color="#6d6963" />Master Schedule</button>
         </div>
 
         <Icon src={assets.divider} className="h-px w-full" />
@@ -357,7 +385,7 @@ function LeftSidebar({ collapsed, onToggle, onAssistantClick }: { collapsed: boo
         <div className="min-h-0 flex-1">
           <div className="mb-2 flex items-center justify-between rounded-[8px] px-3 py-2">
             <p className="text-[13px] font-medium text-[#42413c]">History</p>
-            <div className="-scale-y-100"><Icon src={assets.chevronUp} className="h-[4px] w-[8px]" /></div>
+            <div className="-scale-y-100"><CaretDown size={12} weight="light" color="#7a766f" /></div>
           </div>
           <div className="space-y-2">
             {["How is the Class III price dr...", "Will the West Seneca expan...", "How much excess spring flu...", "Are we losing Bison Dip sale..."].map((line) => (
@@ -367,7 +395,7 @@ function LeftSidebar({ collapsed, onToggle, onAssistantClick }: { collapsed: boo
         </div>
       </div>
 
-      <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[14px] font-medium text-[#42413c]"><Icon src={assets.settings} className="size-5" />Settings</button>
+      <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[14px] font-medium text-[#42413c]"><GearSix size={20} weight="light" color="#6d6963" />Settings</button>
     </aside>
   )
 }
@@ -383,13 +411,13 @@ function CenterHeader({ width }: { width: number }) {
 
         <button className="flex items-center gap-4 text-[12px] font-medium text-black">
           Cheddar Milk 20kg Block
-          <Icon src={assets.topChevron} className="h-[4px] w-[8px]" />
+          <CaretDown size={12} weight="light" color="#6f6b65" />
         </button>
 
         <div className="flex items-center gap-4">
-          <Icon src={assets.topDots} className="size-4" />
+          <DotsThree size={16} weight="light" color="#7a766f" />
           <button className="flex items-center gap-3 rounded-[8px] border border-[#f5f5f5] bg-[#27251e] px-3 py-2 text-[12px] text-white">
-            <Icon src={assets.topDownload} className="size-4" />Export
+            <DownloadSimple size={16} weight="light" color="white" />Export
           </button>
           <div className="h-[29px] w-px bg-[#f5f5f5]" />
           <div className="grid size-8 place-items-center rounded-[32px] bg-[#ccf3d8] text-[12px] font-medium text-[#413f3f]">KR</div>
@@ -413,16 +441,16 @@ function ChatSidebar({
       <div className="flex min-h-0 flex-1 flex-col justify-between">
         <div className="flex items-center justify-between rounded-[8px] bg-white py-2">
           <div className="flex items-center gap-4">
-            <Icon src={assets.chatStar} className="size-5" />
+            <img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" />
             <div className="flex items-center gap-1">
               <p className="text-[14px] font-medium text-[#42413c]">New chat</p>
-              <Icon src={assets.chatCaret} className="size-4" />
+              <CaretDown size={16} weight="light" color="#6f6b65" />
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Icon src={assets.chatPlus} className="size-5" />
-            <button onClick={onFloat}><Icon src={assets.chatPip} className="size-5" /></button>
-            <Icon src={assets.chatX} className="size-5" />
+            <Plus size={20} weight="light" color="#42413c" />
+            <button onClick={onFloat} className="cursor-pointer"><PictureInPicture size={20} weight="light" color="#42413c" /></button>
+            <X size={20} weight="light" color="#42413c" />
           </div>
         </div>
 
@@ -430,10 +458,10 @@ function ChatSidebar({
           <Icon src={assets.chatLogo} className="size-[38px]" />
           <h2 className="mt-4 w-[300px] text-[19px] font-medium text-[#42413c]">What would you like to know about demand?</h2>
           <div className="mt-4 space-y-1">
-            <button className="flex w-full items-center gap-2 rounded-[8px] pb-2 pr-[14px] pt-1 text-[14px] text-[#42413c]"><Icon src={assets.chatBook} className="size-5" /><span>Explain</span></button>
-            <button className="flex w-full items-center gap-2 rounded-[8px] pb-2 pr-[14px] pt-1 text-[14px] text-[#42413c]"><Icon src={assets.chatFlow} className="size-5" /><span>Optimise</span></button>
-            <button className="flex w-full items-center gap-2 rounded-[8px] pb-2 pr-[14px] pt-1 text-[14px] text-[#42413c]"><Icon src={assets.chatFile} className="size-5" /><span>Report</span></button>
-            <button className="flex w-full items-center gap-2 rounded-[8px] pb-2 pr-[14px] pt-1 text-[14px] text-[#42413c]"><Icon src={assets.chatQuestion} className="size-5" /><span>Help</span></button>
+            <button className="flex w-full items-center gap-2 rounded-[8px] pb-2 pr-[14px] pt-1 text-[14px] text-[#42413c]"><BookOpen size={20} weight="light" color="#42413c" /><span>Explain</span></button>
+            <button className="flex w-full items-center gap-2 rounded-[8px] pb-2 pr-[14px] pt-1 text-[14px] text-[#42413c]"><FlowArrow size={20} weight="light" color="#42413c" /><span>Optimise</span></button>
+            <button className="flex w-full items-center gap-2 rounded-[8px] pb-2 pr-[14px] pt-1 text-[14px] text-[#42413c]"><FileText size={20} weight="light" color="#42413c" /><span>Report</span></button>
+            <button className="flex w-full items-center gap-2 rounded-[8px] pb-2 pr-[14px] pt-1 text-[14px] text-[#42413c]"><Question size={20} weight="light" color="#42413c" /><span>Help</span></button>
           </div>
         </div>
       </div>
@@ -447,11 +475,11 @@ function ChatSidebar({
         />
         <div className="flex justify-end">
           {chatInput.trim().length > 0 ? (
-            <button aria-label="Send message" className="grid place-items-center rounded-[8px] p-1 text-[#27251E]">
+            <button aria-label="Send message" className="grid place-items-center rounded-[8px] p-1 text-[#27251E] cursor-pointer">
               <PaperPlaneTilt size={17} weight="fill" />
             </button>
           ) : (
-            <Icon src={assets.chatMic} className="h-[21px] w-[15px]" />
+            <Microphone size={17} weight="fill" color="#27251E" />
           )}
         </div>
       </div>
@@ -472,16 +500,16 @@ function FloatingAssistantDock({
     <div className="absolute bottom-5 right-[153px] z-20 w-[392px] rounded-[8px] border border-[#ebe8e4] bg-[#42413c] px-4 py-2">
       <div className="flex items-center justify-between rounded-[8px] bg-[#42413c] py-2">
         <div className="flex items-center gap-4">
-          <Icon src={assets.floatStar} className="size-5" />
+          <img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px] brightness-0 invert" />
           <div className="flex items-center gap-1">
             <p className="text-[14px] font-medium text-white">New chat</p>
-            <Icon src={assets.floatCaret} className="size-4" />
+            <CaretDown size={16} weight="light" color="#e6e1d8" />
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <Icon src={assets.floatPlus} className="size-5" />
-          <button onClick={onSidebar}><Icon src={assets.floatPip} className="size-5" /></button>
-          <Icon src={assets.floatX} className="size-5" />
+          <Plus size={20} weight="light" color="white" />
+          <button onClick={onSidebar} className="cursor-pointer"><PictureInPicture size={20} weight="light" color="white" /></button>
+          <X size={20} weight="light" color="white" />
         </div>
       </div>
 
@@ -489,15 +517,15 @@ function FloatingAssistantDock({
         <input
           value={chatInput}
           onChange={(e) => setChatInput(e.target.value)}
-          className="w-full bg-transparent text-[14px] text-white outline-none placeholder:text-[#acacac]"
+          className="w-full bg-transparent text-[14px] text-white outline-none placeholder:text-[#acacac] pb-1"
           placeholder="How can I help?"
         />
         {chatInput.trim().length > 0 ? (
-          <button aria-label="Send message" className="grid place-items-center rounded-[8px] p-1 text-white">
+          <button aria-label="Send message" className="grid place-items-center rounded-[8px] p-1 text-white cursor-pointer">
             <PaperPlaneTilt size={17} weight="fill" />
           </button>
         ) : (
-          <Icon src={assets.floatMic} className="h-[23px] w-[152px]" />
+          <Microphone size={17} weight="fill" color="white" />
         )}
       </div>
     </div>
