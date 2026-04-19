@@ -1,7 +1,7 @@
 "use client"
 /* eslint-disable @next/next/no-img-element */
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   BookOpen,
   CalendarDots,
@@ -29,8 +29,13 @@ import {
   Question,
   X,
   BuildingOfficeIcon,
+  ArrowClockwise,
+  ShareNetwork,
+  FloppyDisk,
+  Layout,
 } from "@phosphor-icons/react"
 import {
+  Area,
   Bar,
   CartesianGrid,
   ComposedChart,
@@ -192,8 +197,35 @@ const planningItems = [
 
 const productColors = ["#4f855f", "#86bd97", "#284c33", "#d9d6cf", "#6f6b65", "#42413c"]
 
+const chatHistoryItems = [
+  "Forecast analysis for Q3 2026",
+  "Butter Unsalted inventory performance",
+  "SKU demand vs budget comparison",
+  "Historical price trend for Cheddar",
+]
+
 function Icon({ src, alt = "", className = "" }: { src: string; alt?: string; className?: string }) {
   return <img src={src} alt={alt} className={className} />
+}
+
+function MobileOverlay() {
+  return (
+    <div className="fixed inset-0 z-[1000] hidden flex-col items-center justify-center bg-white/70 px-8 text-center backdrop-blur-xl max-[650px]:flex">
+      <div className="flex max-w-[320px] flex-col items-center gap-6">
+        <div className="relative">
+          <div className="absolute inset-0 rounded-full bg-[#86bd97]/20" />
+          <img src="/daisy-logo.svg" alt="Daisy Logo" className="relative size-20" />
+        </div>
+        <div className="space-y-2">
+          <h2 className="text-2xl font-bold tracking-tight text-[#27251e]">Desktop View Required</h2>
+          <p className="text-sm leading-relaxed text-[#6d6963]">
+            This daisy-demo is tailored for professional desktop resolutions to ensure full visibility of data and AI interactions.
+          </p>
+        </div>
+        <div className="h-px w-12 bg-[#ebe8e4]" />
+      </div>
+    </div>
+  )
 }
 
 function Divider({ className = "" }: { className?: string }) {
@@ -284,7 +316,7 @@ function DemandOverviewCard() {
 function ForecastCard() {
   const [duration, setDuration] = useState("1Y")
   const data = forecastDataSets[duration]
-  
+
   return (
     <article className="overflow-hidden rounded-[12px] bg-white p-6">
       <div className="mb-4 space-y-4">
@@ -330,6 +362,13 @@ function ForecastCard() {
             <XAxis dataKey="month" tick={{ fill: "#727272", fontSize: 12 }} tickLine={false} axisLine={false} />
             <YAxis domain={[0, 1000]} ticks={[0, 200, 400, 600, 800, 1000]} tick={{ fill: "#525252", fontSize: 12 }} tickLine={false} axisLine={false} width={45} />
             <Tooltip content={<ChartTooltip />} cursor={{ stroke: "#d9d6cf", strokeDasharray: "3 3" }} />
+            <defs>
+              <linearGradient id="colorS1F" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#4f855f" stopOpacity={0.1} />
+                <stop offset="95%" stopColor="#4f855f" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <Area dataKey="s1F" stroke="none" fill="url(#colorS1F)" connectNulls isAnimationActive={false} />
             <Line dataKey="s1A" type="linear" name="Series 1" stroke="#4f855f" strokeWidth={2} dot={false} connectNulls animationDuration={300} />
             <Line dataKey="s1F" type="linear" name="Series 1 Forecast" stroke="#4f855f" strokeWidth={2} strokeDasharray="4 4" dot={false} connectNulls animationDuration={300} />
             <Line dataKey="s2A" type="linear" name="Series 2" stroke="#4b7a5a" strokeWidth={2} dot={false} connectNulls animationDuration={300} />
@@ -379,14 +418,14 @@ function PlanningCard({ selectedProduct }: { selectedProduct: string }) {
           <tbody>
             {planningItems.map((item, idx) => (
               <tr key={item.name} className={selectedProduct === item.name ? "bg-[#f5f9f6]" : ""}>
-                <td className="h-[72px] border-b border-[#e2e2e2] px-6 text-[14px] leading-[1.3] text-[#1e1e1e]">
+                <td className="h-[44px] border-b border-[#e2e2e2] px-6 text-[14px] leading-[1.3] text-[#1e1e1e]">
                   <div className="flex items-center gap-2">
                     <span className="h-2.5 w-2.5 shrink-0 rounded-[2px]" style={{ backgroundColor: productColors[idx % productColors.length] }} />
                     {item.shortName}
                   </div>
                 </td>
                 {item.values.map((value, vIdx) => (
-                  <td key={`${item.name}-${vIdx}`} className="h-[72px] border-b border-[#e2e2e2] px-6 text-[14px] leading-[1.3] text-[#5e5e5e]">{value}</td>
+                  <td key={`${item.name}-${vIdx}`} className="h-[52px] border-b border-[#e2e2e2] px-6 text-[14px] leading-[1.3] text-[#5e5e5e]">{value}</td>
                 ))}
               </tr>
             ))}
@@ -394,8 +433,8 @@ function PlanningCard({ selectedProduct }: { selectedProduct: string }) {
         </table>
       </div>
 
-      <div className="mt-4 flex items-center gap-[22px] px-2 py-4">
-        <div className="flex items-center gap-[22px]">
+      <div className="mt-4 flex items-center gap-[12px] px-2 py-4">
+        <div className="flex items-center gap-[12px]">
           <button className="grid size-[38px] place-items-center rounded-[10px]"><CaretLeft size={16} weight="light" color="#42413c" /></button>
           <button className="flex items-center gap-3 rounded-[8px] border border-[#c6c6c6] bg-white px-3 py-3 text-[14px] text-[#303030]">1 <CaretDown size={12} weight="light" color="#6f6b65" /></button>
           <button className="grid size-[38px] place-items-center rounded-[10px]"><CaretRight size={16} weight="light" color="#42413c" /></button>
@@ -406,34 +445,74 @@ function PlanningCard({ selectedProduct }: { selectedProduct: string }) {
   )
 }
 
-function LeftSidebar({ collapsed, onToggle, onAssistantClick }: { collapsed: boolean; onToggle: () => void; onAssistantClick: () => void }) {
+function LeftSidebar({
+  collapsed,
+  onToggle,
+  onAssistantClick,
+  width,
+  onResizeStart
+}: {
+  collapsed: boolean;
+  onToggle: () => void;
+  onAssistantClick: () => void;
+  width: number;
+  onResizeStart: (e: React.MouseEvent) => void
+}) {
+  const [isHistoryVisible, setIsHistoryVisible] = useState(true)
+  const [isCollapsedHistoryOpen, setIsCollapsedHistoryOpen] = useState(false)
+
   if (collapsed) {
     return (
-      <aside className="flex h-full w-[62px] shrink-0 flex-col justify-between border-r border-[#ebe8e4] bg-[#f2f0ec] px-2 pb-2 pt-6">
+      <aside className="relative flex h-full w-[62px] shrink-0 flex-col justify-between border-r border-[#ebe8e4] bg-[#f2f0ec] px-2 pb-2 pt-6">
+        <div
+          onMouseDown={onResizeStart}
+          className="absolute right-0 top-0 h-full w-1 cursor-col-resize hover:bg-black/5 z-50 transition-colors"
+        />
         <div className="flex min-h-0 flex-1 flex-col gap-8">
           <div className="flex w-full flex-col items-center gap-4">
-            <button onClick={onToggle} className="rotate-180 p-1 cursor-pointer"><CaretDoubleLeft size={12} weight="light" color="#7a766f" /></button>
+            <button onClick={onToggle} className="rotate-180 p-2 cursor-pointer hover:bg-white/40 rounded-full transition-colors" title="Expand Sidebar">
+              <CaretDoubleLeft size={14} weight="light" color="#7a766f" />
+            </button>
             <Icon src={assets.sidebarLogo} className="size-[38px]" />
           </div>
 
           <div className="space-y-2">
-            <button className="flex w-full justify-center rounded-[8px] px-3 py-2"><House size={20} weight="light" color="#6d6963" /></button>
-            <button onClick={onAssistantClick} className="flex w-full justify-center rounded-[8px] px-3 py-2 cursor-pointer"><img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" /></button>
+            <button className="flex w-full justify-center rounded-[8px] px-3 py-2 hover:bg-white/40 transition-colors" title="Home"><House size={20} weight="light" color="#6d6963" /></button>
+            <button onClick={onAssistantClick} className="flex w-full justify-center rounded-[8px] px-3 py-2 cursor-pointer hover:bg-white/40 transition-colors" title="AI Assistant"><img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" /></button>
           </div>
 
           <Divider />
 
           <div className="space-y-2">
-            <button className="flex w-full justify-center rounded-[8px] bg-[#27251e] p-2"><Globe size={20} weight="light" color="white" /></button>
-            <button className="flex w-full justify-center rounded-[8px] p-2"><ChartPieSlice size={20} weight="light" color="#6d6963" /></button>
-            <button className="flex w-full justify-center rounded-[8px] p-2"><CurrencyCircleDollar size={20} weight="light" color="#6d6963" /></button>
-            <button className="flex w-full justify-center rounded-[8px] p-2"><CalendarDots size={20} weight="light" color="#6d6963" /></button>
+            <button className="flex w-full justify-center rounded-[8px] bg-[#27251e] p-2" title="Demand"><Globe size={20} weight="light" color="white" /></button>
+            <button className="flex w-full justify-center rounded-[8px] p-2 hover:bg-white/40 transition-colors" title="Supply"><ChartPieSlice size={20} weight="light" color="#6d6963" /></button>
+            <button className="flex w-full justify-center rounded-[8px] p-2 hover:bg-white/40 transition-colors" title="Pre-IBP"><CurrencyCircleDollar size={20} weight="light" color="#6d6963" /></button>
+            <button className="flex w-full justify-center rounded-[8px] p-2 hover:bg-white/40 transition-colors" title="Master Schedule"><CalendarDots size={20} weight="light" color="#6d6963" /></button>
           </div>
 
           <Divider />
 
-          <div className="space-y-2">
-            <button className="flex w-full justify-center rounded-[8px] px-3 py-2"><ClockCounterClockwise size={20} weight="light" color="#6d6963" /></button>
+          <div className="relative space-y-2">
+            <button
+              onClick={() => setIsCollapsedHistoryOpen(!isCollapsedHistoryOpen)}
+              className="flex w-full justify-center rounded-[8px] px-3 py-2 hover:bg-white/40 transition-colors cursor-pointer"
+              title="History"
+            >
+              <ClockCounterClockwise size={20} weight="light" color="#6d6963" />
+            </button>
+
+            {isCollapsedHistoryOpen && (
+              <div className="absolute left-full top-0 ml-2 w-64 z-[100] rounded-lg border border-[#ebe8e4] bg-white p-2 shadow-xl animate-in fade-in slide-in-from-left-1">
+                <p className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-[#9a9a9a]">Recent History</p>
+                <div className="space-y-1">
+                  {chatHistoryItems.map((item) => (
+                    <button key={item} onClick={() => setIsCollapsedHistoryOpen(false)} className="w-full truncate px-3 py-2 text-left text-[12px] hover:bg-[#f5f5f5] rounded-md text-[#6d6963] transition-colors">
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
             <div className="h-6 rounded-[8px]" />
             <div className="h-6 rounded-[8px]" />
             <div className="h-6 rounded-[8px]" />
@@ -441,49 +520,65 @@ function LeftSidebar({ collapsed, onToggle, onAssistantClick }: { collapsed: boo
           </div>
         </div>
 
-        <button className="flex w-full justify-center rounded-[8px] px-3 py-2"><GearSix size={20} weight="light" color="#6d6963" /></button>
+        <button className="flex w-full justify-center rounded-[8px] px-3 py-2 hover:bg-white/40 transition-colors" title="Settings"><GearSix size={20} weight="light" color="#6d6963" /></button>
       </aside>
     )
   }
 
   return (
-    <aside className="flex h-full w-[204px] shrink-0 flex-col justify-between border-r border-[#ebe8e4] bg-[#f2f0ec] p-2">
+    <aside
+      className="relative flex h-full shrink-0 flex-col justify-between border-r border-[#ebe8e4] bg-[#f2f0ec] p-2 overflow-hidden"
+      style={{ width: `${width}px` }}
+    >
+      <div
+        onMouseDown={onResizeStart}
+        className="absolute right-0 top-0 h-full w-1 cursor-col-resize hover:bg-black/5 z-50 transition-colors"
+      />
       <div className="flex min-h-0 flex-1 flex-col gap-8">
         <div className="flex items-center justify-between">
           <Icon src={assets.sidebarLogo} className="size-[38px]" />
-          <button onClick={onToggle} className="p-1 cursor-pointer"><CaretDoubleLeft size={12} weight="light" color="#7a766f" /></button>
+          <button onClick={onToggle} className="p-2 cursor-pointer hover:bg-white/40 rounded-full transition-colors" title="Collapse Sidebar">
+            <CaretDoubleLeft size={14} weight="light" color="#7a766f" />
+          </button>
         </div>
 
         <div className="space-y-2">
-          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><House size={20} weight="light" color="#6d6963" />Home</button>
-          <button onClick={onAssistantClick} className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c] cursor-pointer"> <img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" />AI Assistant</button>
+          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c] hover:bg-white/40 transition-colors" title="Home"><House size={20} weight="light" color="#6d6963" />Home</button>
+          <button onClick={onAssistantClick} className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c] cursor-pointer hover:bg-white/40 transition-colors" title="AI Assistant"> <img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" />AI Assistant</button>
         </div>
 
         <Divider />
 
         <div className="space-y-2">
-          <button className="flex w-full items-center gap-2 rounded-[8px] bg-[#27251e] px-3 py-2 text-[13px] font-medium text-white"><Globe size={20} weight="light" color="white" />Demand</button>
-          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><ChartPieSlice size={20} weight="light" color="#6d6963" />Supply</button>
-          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><CurrencyCircleDollar size={20} weight="light" color="#6d6963" />Pre-IBP</button>
-          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><CalendarDots size={20} weight="light" color="#6d6963" />Master Schedule</button>
+          <button className="flex w-full items-center gap-2 rounded-[8px] bg-[#27251e] px-3 py-2 text-[13px] font-medium text-white hover:bg-[#1a1a1a] transition-colors"><Globe size={20} weight="light" color="white" />Demand</button>
+          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c] hover:bg-white/40 transition-colors"><ChartPieSlice size={20} weight="light" color="#6d6963" />Supply</button>
+          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c] hover:bg-white/40 transition-colors"><CurrencyCircleDollar size={20} weight="light" color="#6d6963" />Pre-IBP</button>
+          <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c] hover:bg-white/40 transition-colors"><CalendarDots size={20} weight="light" color="#6d6963" />Master Schedule</button>
         </div>
 
         <Divider />
 
-        <div className="min-h-0 flex-1">
-          <div className="mb-2 flex items-center justify-between rounded-[8px] px-3 py-2">
+        <div className="min-h-0 flex-1 overflow-y-auto no-scrollbar">
+          <button
+            onClick={() => setIsHistoryVisible(!isHistoryVisible)}
+            className="mb-2 flex w-full items-center justify-between rounded-[8px] px-3 py-2 hover:bg-white/40 transition-colors cursor-pointer group text-left"
+            title={isHistoryVisible ? "Hide History" : "Show History"}
+          >
             <p className="text-[13px] font-medium text-[#42413c]">History</p>
-            <div className="-scale-y-100"><CaretDown size={12} weight="light" color="#7a766f" /></div>
-          </div>
-          <div className="space-y-2">
-            {["How is the Class III price dr...", "Will the West Seneca expan...", "How much excess spring flu...", "Are we losing Bison Dip sale..."].map((line) => (
-              <p key={line} className="truncate px-3 py-1 text-[12px] text-[#6e6c66]">{line}</p>
-            ))}
-          </div>
+            <CaretDown size={12} weight="light" color="#7a766f" className={`transition-transform duration-200 ${isHistoryVisible ? "rotate-0" : "-rotate-90"}`} />
+          </button>
+
+          {isHistoryVisible && (
+            <div className="space-y-1 animate-in slide-in-from-top-1 fade-in duration-200">
+              {chatHistoryItems.map((line) => (
+                <p key={line} className="truncate px-3 py-1 text-[12px] text-[#6e6c66] hover:text-[#27251e] cursor-pointer transition-colors" title={line}>{line}</p>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
-      <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[14px] font-medium text-[#42413c]"><GearSix size={20} weight="light" color="#6d6963" />Settings</button>
+      <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[14px] font-medium text-[#42413c] hover:bg-white/40 transition-colors" title="Settings"><GearSix size={20} weight="light" color="#6d6963" />Settings</button>
     </aside>
   )
 }
@@ -491,6 +586,8 @@ function LeftSidebar({ collapsed, onToggle, onAssistantClick }: { collapsed: boo
 function CenterHeader({ selectedProduct, onSelect }: { selectedProduct: string; onSelect: (name: string) => void }) {
   const [isOpen, setIsOpen] = useState(false)
   const [isExportOpen, setIsExportOpen] = useState(false)
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false)
+
   return (
     <header className="relative h-[58px] border-b border-[#ebe8e4] bg-white px-4 py-3 z-30">
       <div className="mx-auto flex h-full w-full items-center justify-between">
@@ -527,15 +624,40 @@ function CenterHeader({ selectedProduct, onSelect }: { selectedProduct: string; 
         </div>
 
         <div className="flex items-center gap-4">
-          <DotsThree size={16} weight="light" color="#7a766f" />
           <div className="relative">
-            <button 
+            <button
+              onClick={() => setIsOptionsOpen(!isOptionsOpen)}
+              className="grid size-8 place-items-center rounded-full hover:bg-[#f5f5f5] transition-colors cursor-pointer"
+              title="Dashboard Options"
+            >
+              <DotsThree size={20} weight="light" color="#7a766f" />
+            </button>
+
+            {isOptionsOpen && (
+              <div className="absolute right-0 top-full mt-2 w-56 rounded-lg border border-[#ebe8e4] bg-white p-2 shadow-xl animate-in fade-in slide-in-from-top-1">
+                <p className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-[#9a9a9a]">Dashboard Settings</p>
+                <div className="space-y-1">
+                  {[
+                    { label: "Refresh Data", icon: <ArrowClockwise size={16} /> },
+                    { label: "Share View", icon: <ShareNetwork size={16} /> },
+                  ].map((opt) => (
+                    <button key={opt.label} onClick={() => setIsOptionsOpen(false)} className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-left hover:bg-[#f5f5f5] transition-colors cursor-pointer">
+                      <div className="text-[#6f6b65]">{opt.icon}</div>
+                      <span className="text-[12px] font-medium text-[#1a1a1a]">{opt.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="relative">
+            <button
               onClick={() => setIsExportOpen(!isExportOpen)}
               className="flex items-center gap-3 rounded-[8px] border border-[#f5f5f5] bg-[#27251e] px-3 py-2 text-[12px] text-white cursor-pointer"
             >
               <DownloadSimple size={16} weight="light" color="white" />Export
             </button>
-            
+
             {isExportOpen && (
               <div className="absolute right-0 top-full mt-2 w-72 rounded-lg border border-[#ebe8e4] bg-white p-2 shadow-xl ring-1 ring-black/5 animate-in fade-in slide-in-from-top-1">
                 <p className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-[#9a9a9a]">Export Options</p>
@@ -573,21 +695,38 @@ function ChatSidebar({
   chatInput: string
   setChatInput: (value: string) => void
 }) {
+  const [historyOpen, setHistoryOpen] = useState(false)
   return (
-    <aside className="flex h-full w-[320px] shrink-0 flex-col justify-between border-l border-[#ebe8e4] bg-white p-4">
+    <aside className="relative flex h-full w-[320px] shrink-0 flex-col justify-between border-l border-[#ebe8e4] bg-white p-4">
       <div className="flex min-h-0 flex-1 flex-col justify-between">
         <div className="flex items-center justify-between rounded-[8px] bg-white py-2">
           <div className="flex items-center gap-4">
             <img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" />
-            <div className="flex items-center gap-1">
-              <p className="text-[14px] font-medium text-[#42413c]">New chat</p>
-              <CaretDown size={16} weight="light" color="#6f6b65" />
+            <div className="relative">
+              <button
+                onClick={() => setHistoryOpen(!historyOpen)}
+                className="flex items-center gap-1 cursor-pointer hover:bg-gray-50 px-2 py-1 rounded transition-colors"
+                title="View History"
+              >
+                <p className="text-[14px] font-medium text-[#42413c]">New chat</p>
+                <CaretDown size={16} weight="light" color="#6f6b65" className={historyOpen ? "rotate-180" : ""} />
+              </button>
+
+              {historyOpen && (
+                <div className="absolute left-0 top-full mt-2 w-64 z-50 rounded-lg border border-[#ebe8e4] bg-white p-1 shadow-lg">
+                  {chatHistoryItems.map((item) => (
+                    <button key={item} onClick={() => setHistoryOpen(false)} className="w-full truncate px-3 py-2 text-left text-[12px] hover:bg-[#f5f5f5] rounded-md text-[#6d6963]">
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Plus size={20} weight="light" color="#42413c" />
-            <button onClick={onFloat} className="cursor-pointer"><PictureInPicture size={20} weight="light" color="#42413c" /></button>
-            <X size={20} weight="light" color="#42413c" />
+            <Plus size={20} weight="light" color="#42413c" className="cursor-pointer hover:opacity-70" title="New Chat" />
+            <button onClick={onFloat} className="cursor-pointer hover:opacity-70" title="Floating Mode"><PictureInPicture size={20} weight="light" color="#42413c" /></button>
+            <X size={20} weight="light" color="#42413c" className="cursor-pointer hover:opacity-70" title="Close Assistant" />
           </div>
         </div>
 
@@ -633,24 +772,41 @@ function FloatingAssistantDock({
   chatInput: string
   setChatInput: (value: string) => void
 }) {
+  const [historyOpen, setHistoryOpen] = useState(false)
   return (
-    <div className="absolute bottom-5 right-[153px] z-20 w-[392px] rounded-[8px] border border-[#ebe8e4] bg-[#42413c] px-4 py-2">
-      <div className="flex items-center justify-between rounded-[8px] bg-[#42413c] py-2">
+    <div className="fixed bottom-5 right-5 z-[50] w-[392px] rounded-[12px] border border-white/10 bg-[#42413c] p-1 shadow-2xl backdrop-blur-sm">
+      <div className="flex items-center justify-between rounded-[10px] bg-[#42413c] px-3 py-2">
         <div className="flex items-center gap-4">
           <img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px] brightness-0 invert" />
-          <div className="flex items-center gap-1">
-            <p className="text-[14px] font-medium text-white">New chat</p>
-            <CaretDown size={16} weight="light" color="#e6e1d8" />
+          <div className="relative">
+            <button
+              onClick={() => setHistoryOpen(!historyOpen)}
+              className="flex items-center gap-1 cursor-pointer hover:bg-white/10 px-2 py-1 rounded transition-colors"
+              title="View History"
+            >
+              <p className="text-[14px] font-medium text-white">New chat</p>
+              <CaretDown size={16} weight="light" color="#e6e1d8" className={historyOpen ? "rotate-180" : ""} />
+            </button>
+
+            {historyOpen && (
+              <div className="absolute left-0 bottom-full mb-2 w-64 z-50 rounded-lg border border-white/10 bg-[#42413c] p-1 shadow-2xl">
+                {chatHistoryItems.map((item) => (
+                  <button key={item} onClick={() => setHistoryOpen(false)} className="w-full truncate px-3 py-2 text-left text-[12px] hover:bg-white/10 rounded-md text-[#e6e1d8]">
+                    {item}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <Plus size={20} weight="light" color="white" />
-          <button onClick={onSidebar} className="cursor-pointer"><PictureInPicture size={20} weight="light" color="white" /></button>
-          <X size={20} weight="light" color="white" />
+          <Plus size={20} weight="light" color="white" className="cursor-pointer hover:opacity-70" title="New Chat" />
+          <button onClick={onSidebar} className="cursor-pointer hover:opacity-70" title="Dock to Sidebar"><PictureInPicture size={20} weight="light" color="white" /></button>
+          <X size={20} weight="light" color="white" className="cursor-pointer hover:opacity-70" title="Close Assistant" />
         </div>
       </div>
 
-      <div className="mt-8 flex items-start justify-between gap-3">
+      <div className="mt-6 flex items-start justify-between gap-3 px-4 pb-4 pt-2">
         <input
           value={chatInput}
           onChange={(e) => setChatInput(e.target.value)}
@@ -670,20 +826,79 @@ function FloatingAssistantDock({
 }
 
 export default function Page() {
-  const [collapsed, setCollapsed] = useState(true)
+  const [collapsed, setCollapsed] = useState(false)
+  const [sidebarWidth, setSidebarWidth] = useState(204)
+  const [isResizing, setIsResizing] = useState(false)
   const [assistantMode, setAssistantMode] = useState<AssistantMode>("float")
   const [chatInput, setChatInput] = useState("")
   const [selectedProduct, setSelectedProduct] = useState(planningItems[0].name)
 
-  const leftWidth = collapsed ? 62 : 204
-  const rightWidth = assistantMode === "sidebar" ? 320 : 0
+  const handleResizeStart = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setIsResizing(true)
+  }
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing) return
+
+      let newWidth = e.clientX
+
+      // If expanding from collapsed
+      if (collapsed && newWidth > 100) {
+        setCollapsed(false)
+        setSidebarWidth(204)
+        setIsResizing(false)
+        return
+      }
+
+      if (!collapsed) {
+        if (newWidth < 160) {
+          setCollapsed(true)
+          setSidebarWidth(62)
+          setIsResizing(false)
+        } else if (newWidth > 204) {
+          setSidebarWidth(204)
+        } else {
+          setSidebarWidth(newWidth)
+        }
+      }
+    }
+
+    const handleMouseUp = () => {
+      setIsResizing(false)
+    }
+
+    if (isResizing) {
+      window.addEventListener("mousemove", handleMouseMove)
+      window.addEventListener("mouseup", handleMouseUp)
+    }
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove)
+      window.removeEventListener("mouseup", handleMouseUp)
+    }
+  }, [isResizing, collapsed])
 
   return (
-    <main className="h-screen overflow-hidden border-2 border-[#ebe8e4] bg-white text-[#42413c] [color-scheme:light]">
+    <main
+      className={`h-screen overflow-hidden border-2 border-[#ebe8e4] bg-white text-[#42413c] [color-scheme:light] ${isResizing ? "select-none cursor-col-resize" : ""}`}
+    >
+      <MobileOverlay />
       <div className="relative flex h-full w-full">
         <LeftSidebar
           collapsed={collapsed}
-          onToggle={() => setCollapsed((v) => !v)}
+          width={collapsed ? 62 : sidebarWidth}
+          onResizeStart={handleResizeStart}
+          onToggle={() => {
+            if (collapsed) {
+              setCollapsed(false)
+              setSidebarWidth(204)
+            } else {
+              setCollapsed(true)
+              setSidebarWidth(62)
+            }
+          }}
           onAssistantClick={() => setAssistantMode((m) => (m === "sidebar" ? "float" : "sidebar"))}
         />
 
