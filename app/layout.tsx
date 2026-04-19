@@ -11,6 +11,11 @@ const fontMono = Geist_Mono({
   variable: "--font-mono",
 })
 
+export const metadata = {
+  title: "Daisy Dashboard Redesign - Kenneth Ras",
+  description: "A professional dairy and bio-processing demand-side dashboard redesign demo created by Kenneth Ras.",
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{

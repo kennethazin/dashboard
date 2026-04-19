@@ -206,6 +206,8 @@ const chatHistoryItems = [
   "Historical price trend for Cheddar",
 ]
 
+const planningMonths = ["Jan", "Feb", "Apr", "May", "Jun", "Jul"]
+
 function Icon({ src, alt = "", className = "" }: { src: string; alt?: string; className?: string }) {
   return <img src={src} alt={alt} className={className} />
 }
@@ -412,36 +414,89 @@ function PlanningCard({ selectedProduct }: { selectedProduct: string }) {
         <table className="min-w-[1123px] w-full bg-white text-left">
           <thead className="bg-[#fafafa] text-[12px] uppercase leading-[18px] text-[#5e5e5e]">
             <tr>
-              {["Product", "Jan", "Feb", "Apr", "May", "Jun", "Jul"].map((h) => (
-                <th key={h} className="h-[44px] border-b border-[#e2e2e2] px-6 font-normal">{h}</th>
+              {["Product", ...planningMonths, "Total"].map((h) => (
+                <th
+                  key={h}
+                  className={`h-[44px] border-b border-[#e2e2e2] px-6 font-normal whitespace-nowrap ${h === 'Product' ? 'sticky left-0 z-20 bg-[#fafafa] w-px' : h === 'Total' ? 'sticky right-0 z-20 bg-[#fafafa] w-px' : ''}`}
+                >
+                  {h}
+                </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {planningItems.map((item, idx) => (
-              <tr key={item.name} className={selectedProduct === item.name ? "bg-[#f5f9f6]" : ""}>
-                <td className="h-[44px] border-b border-[#e2e2e2] px-6 text-[14px] leading-[1.3] text-[#1e1e1e]">
-                  <div className="flex items-center gap-2">
-                    <span className="h-2.5 w-2.5 shrink-0 rounded-[2px]" style={{ backgroundColor: productColors[idx % productColors.length] }} />
-                    {item.shortName}
-                  </div>
-                </td>
-                {item.values.map((value, vIdx) => (
-                  <td key={`${item.name}-${vIdx}`} className="h-[52px] border-b border-[#e2e2e2] px-6 text-[14px] leading-[1.3] text-[#5e5e5e]">{value}</td>
-                ))}
-              </tr>
-            ))}
+            {planningItems.map((item, idx) => {
+              const parseTableValue = (v: string | number) => {
+                const s = v.toString().toLowerCase().replace(/,/g, "")
+                if (s.endsWith("k")) return parseFloat(s.slice(0, -1)) * 1000
+                return parseFloat(s) || 0
+              }
+
+              const total = item.values.reduce((sum, val) => sum + parseTableValue(val), 0)
+
+              return (
+                <tr key={item.name} className={`${selectedProduct === item.name ? "bg-[#f5f9f6]" : "bg-white"} group`}>
+                  <td className={`sticky left-0 z-10 h-[44px] border-b border-[#e2e2e2] px-6 text-[14px] leading-[1.3] text-[#1e1e1e] whitespace-nowrap ${selectedProduct === item.name ? "bg-[#f0f7f1]" : "bg-[#fbfbfb]"}`}>
+                    <div className="flex items-center gap-2">
+                      <span className="h-2.5 w-2.5 shrink-0 rounded-[2px]" style={{ backgroundColor: productColors[idx % productColors.length] }} />
+                      <span>{item.shortName}</span>
+                    </div>
+                  </td>
+                  {item.values.map((value, vIdx) => (
+                    <td key={`${item.name}-${vIdx}`} className="h-[52px] border-b border-[#e2e2e2] px-6 text-[14px] leading-[1.3] text-[#5e5e5e]">{value}</td>
+                  ))}
+                  <td className={`sticky right-0 z-10 h-[52px] border-b border-[#e2e2e2] px-6 text-[14px] font-semibold leading-[1.3] text-[#1e1e1e] ${selectedProduct === item.name ? "bg-[#f0f7f1]" : "bg-[#fbfbfb]"}`}>
+                    {total >= 1000 ? `${(total / 1000).toFixed(1)}k` : total.toLocaleString()}
+                  </td>
+                </tr>
+              )
+            })}
+            <tr className="bg-[#fafafa] font-semibold">
+              <td className="sticky left-0 z-10 h-[44px] border-b border-[#e2e2e2] bg-inherit px-6 text-[14px] leading-[1.3] text-[#1e1e1e] whitespace-nowrap">
+                Total
+              </td>
+              {planningMonths.map((_, i) => {
+                const parseTableValue = (v: string | number) => {
+                  const s = v.toString().toLowerCase().replace(/,/g, "")
+                  if (s.endsWith("k")) return parseFloat(s.slice(0, -1)) * 1000
+                  return parseFloat(s) || 0
+                }
+                const colTotal = planningItems.reduce((sum, item) => sum + parseTableValue(item.values[i]), 0)
+                return (
+                  <td key={`total-${i}`} className="h-[52px] border-b border-[#e2e2e2] px-6 text-[14px] leading-[1.3] text-[#1e1e1e]">
+                    {colTotal >= 1000 ? `${(colTotal / 1000).toFixed(1)}k` : colTotal.toLocaleString()}
+                  </td>
+                )
+              })}
+              <td className="sticky right-0 z-10 h-[52px] border-b border-[#e2e2e2] bg-inherit px-6 text-[14px] leading-[1.3] text-[#1e1e1e]">
+                {(() => {
+                  const parseTableValue = (v: string | number) => {
+                    const s = v.toString().toLowerCase().replace(/,/g, "")
+                    if (s.endsWith("k")) return parseFloat(s.slice(0, -1)) * 1000
+                    return parseFloat(s) || 0
+                  }
+                  const grandTotal = planningItems.reduce((acc, item) =>
+                    acc + item.values.reduce((s, v) => s + parseTableValue(v), 0), 0)
+                  return grandTotal >= 1000 ? `${(grandTotal / 1000).toFixed(1)}k` : grandTotal.toLocaleString()
+                })()}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
 
-      <div className="mt-4 flex items-center gap-[12px] px-2 py-4">
+      <div className="mt-4 flex items-center justify-start gap-2 px-2 py-4">
         <div className="flex items-center gap-[12px]">
-          <button className="grid size-[38px] place-items-center rounded-[10px]"><CaretLeft size={16} weight="light" color="#42413c" /></button>
+          <button className="grid size-[38px] place-items-center rounded-[10px] hover:bg-[#f5f5f5] transition-colors cursor-pointer" title="Previous Page"><CaretLeft size={16} weight="light" color="#42413c" /></button>
           <button className="flex items-center gap-3 rounded-[8px] border border-[#c6c6c6] bg-white px-3 py-3 text-[14px] text-[#303030]">1 <CaretDown size={12} weight="light" color="#6f6b65" /></button>
-          <button className="grid size-[38px] place-items-center rounded-[10px]"><CaretRight size={16} weight="light" color="#42413c" /></button>
+          <button className="grid size-[38px] place-items-center rounded-[10px] hover:bg-[#f5f5f5] transition-colors cursor-pointer" title="Next Page"><CaretRight size={16} weight="light" color="#42413c" /></button>
         </div>
-        <p className="text-[14px] text-black">1 - 1 of 1</p>
+        <div className="flex items-center gap-4">
+          <p className="text-[14px] text-black">1 - {planningItems.length} of {planningItems.length}</p>
+          <button className="text-[14px] font-medium text-[#059669] hover:underline cursor-pointer">
+            View All
+          </button>
+        </div>
       </div>
     </article>
   )
