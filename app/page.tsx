@@ -49,8 +49,6 @@ const assets = {
   sidebarLogo: "/daisy-logo.svg",
   sidebarCollapse: "https://www.figma.com/api/mcp/asset/1b35c725-a4cc-4101-a389-bb53a8451299",
   sidebarExpand: "https://www.figma.com/api/mcp/asset/5c458a0c-5759-4653-8791-c7cb3e6bd8b8",
-  divider: "https://www.figma.com/api/mcp/asset/350d7aa2-05bc-4fc5-874e-d474df8432f4",
-  dividerCollapsed: "https://www.figma.com/api/mcp/asset/01d00c6c-06f2-4c98-a3ab-f4db0bb5e1e8",
   home: "https://www.figma.com/api/mcp/asset/3b6a3348-84d9-47ed-b2f3-184e22da4727",
   starFour: "https://www.figma.com/api/mcp/asset/f62a7a87-eba1-4385-b9e3-2b70e1d6486b",
   globe: "https://www.figma.com/api/mcp/asset/15c36962-c6cb-4a86-97c3-cfb3d921f6d7",
@@ -99,46 +97,117 @@ const assets = {
   floatMic: "https://www.figma.com/api/mcp/asset/b1568846-09b9-4413-9d5f-c8014ab16025",
 }
 
-const overviewData = [
-  { month: "Jan", totalDemand: 9000, budget: 9500 },
-  { month: "Feb", totalDemand: 8000, budget: 8500 },
-  { month: "Mar", totalDemand: 7700, budget: 8200 },
-  { month: "Apr", totalDemand: 7400, budget: 7700 },
-  { month: "May", totalDemand: 8300, budget: 8400 },
-  { month: "Jun", totalDemand: 9000, budget: 9500 },
+const overviewDataSets: Record<string, any[]> = {
+  "1Y": [
+    { month: "Jul 25", totalDemand: 8200, budget: 8500 },
+    { month: "Aug 25", totalDemand: 8500, budget: 8600 },
+    { month: "Sep 25", totalDemand: 7800, budget: 8000 },
+    { month: "Oct 25", totalDemand: 8100, budget: 8200 },
+    { month: "Nov 25", totalDemand: 9200, budget: 9000 },
+    { month: "Dec 25", totalDemand: 9800, budget: 9500 },
+    { month: "Jan 26", totalDemand: 9000, budget: 9500 },
+    { month: "Feb 26", totalDemand: 8000, budget: 8500 },
+    { month: "Mar 26", totalDemand: 7700, budget: 8200 },
+    { month: "Apr 26", totalDemand: 7400, budget: 7700 },
+    { month: "May 26", totalDemand: 8300, budget: 8400 },
+    { month: "Jun 26", totalDemand: 9000, budget: 9500 },
+  ],
+  "6M": [
+    { month: "Jan 26", totalDemand: 9000, budget: 9500 },
+    { month: "Feb 26", totalDemand: 8000, budget: 8500 },
+    { month: "Mar 26", totalDemand: 7700, budget: 8200 },
+    { month: "Apr 26", totalDemand: 7400, budget: 7700 },
+    { month: "May 26", totalDemand: 8300, budget: 8400 },
+    { month: "Jun 26", totalDemand: 9000, budget: 9500 },
+  ],
+  "3M": [
+    { month: "Apr 26", totalDemand: 7400, budget: 7700 },
+    { month: "May 26", totalDemand: 8300, budget: 8400 },
+    { month: "Jun 26", totalDemand: 9000, budget: 9500 },
+  ],
+  "4W": [
+    { month: "W23", totalDemand: 1800, budget: 2000 },
+    { month: "W24", totalDemand: 2100, budget: 2100 },
+    { month: "W25", totalDemand: 2300, budget: 2200 },
+    { month: "W26", totalDemand: 1950, budget: 2150 },
+  ],
+  "1W": [
+    { month: "Mon", totalDemand: 300, budget: 320 },
+    { month: "Tue", totalDemand: 350, budget: 330 },
+    { month: "Wed", totalDemand: 280, budget: 310 },
+    { month: "Thu", totalDemand: 320, budget: 310 },
+    { month: "Fri", totalDemand: 410, budget: 350 },
+  ]
+}
+
+const forecastDataSets: Record<string, any[]> = {
+  "1Y": [
+    { month: "Jan 2026", s1A: 550, s2A: 380, s3A: 180, s1F: null, s2F: null, s3F: null },
+    { month: "Feb 2026", s1A: 520, s2A: 360, s3A: 160, s1F: null, s2F: null, s3F: null },
+    { month: "Mar 2026", s1A: 580, s2A: 400, s3A: 200, s1F: null, s2F: null, s3F: null },
+    { month: "Apr 2026", s1A: 600, s2A: 420, s3A: 220, s1F: null, s2F: null, s3F: null },
+    { month: "May 2026", s1A: 615, s2A: 430, s3A: 230, s1F: null, s2F: null, s3F: null },
+    { month: "Jun 2026", s1A: 635, s2A: 445, s3A: 245, s1F: null, s2F: null, s3F: null },
+    { month: "Jul 2026", s1A: 680, s1F: 680, s2A: 476, s2F: 476, s3A: 332, s3F: 332 },
+    { month: "Aug 2026", s1A: null, s1F: 645, s2A: null, s2F: 450, s3A: null, s3F: 270 },
+    { month: "Sep 2026", s1A: null, s1F: 610, s2A: null, s2F: 430, s3A: null, s3F: 240 },
+    { month: "Oct 2026", s1A: null, s1F: 650, s2A: null, s2F: 440, s3A: null, s3F: 280 },
+    { month: "Nov 2026", s1A: null, s1F: 620, s2A: null, s2F: 420, s3A: null, s3F: 230 },
+    { month: "Dec 2026", s1A: null, s1F: 598, s2A: null, s2F: 405, s3A: null, s3F: 186 },
+  ],
+  "6M": [
+    { month: "Mar 2026", s1A: 580, s2A: 400, s3A: 200, s1F: null, s2F: null, s3F: null },
+    { month: "Apr 2026", s1A: 600, s2A: 420, s3A: 220, s1F: null, s2F: null, s3F: null },
+    { month: "May 2026", s1A: 615, s2A: 430, s3A: 230, s1F: null, s2F: null, s3F: null },
+    { month: "Jun 2026", s1A: 635, s2A: 445, s3A: 245, s1F: null, s2F: null, s3F: null },
+    { month: "Jul 2026", s1A: 680, s1F: 680, s2A: 476, s2F: 476, s3A: 332, s3F: 332 },
+    { month: "Aug 2026", s1A: null, s1F: 645, s2A: null, s2F: 450, s3A: null, s3F: 270 },
+  ],
+  "3M": [
+    { month: "May 2026", s1A: 615, s2A: 430, s3A: 230, s1F: null, s2F: null, s3F: null },
+    { month: "Jun 2026", s1A: 635, s2A: 445, s3A: 245, s1F: null, s2F: null, s3F: null },
+    { month: "Jul 2026", s1A: 680, s1F: 680, s2A: 476, s2F: 476, s3A: 332, s3F: 332 },
+  ],
+  "4W": [
+    { month: "Week 25", s1A: 640, s2A: 450, s3A: 290, s1F: null, s2F: null, s3F: null },
+    { month: "Week 26", s1A: 660, s2A: 460, s3A: 310, s1F: null, s2F: null, s3F: null },
+    { month: "Week 27", s1A: 680, s1F: 680, s2A: 476, s2F: 476, s3A: 332, s3F: 332 },
+    { month: "Week 28", s1A: null, s1F: 670, s2A: null, s2F: 465, s3A: null, s3F: 320 },
+  ],
+  "1W": [
+    { month: "Sun", s1A: 660, s2A: 465, s3A: 315, s1F: null, s2F: null, s3F: null },
+    { month: "Mon", s1A: 670, s2A: 470, s3A: 320, s1F: null, s2F: null, s3F: null },
+    { month: "Tue", s1A: 680, s1F: 680, s2A: 476, s2F: 476, s3A: 332, s3F: 332 },
+  ]
+}
+
+const planningItems = [
+  { name: "Cheddar Mild 20kg Block", shortName: "Cheddar Mild", values: ["2.9k", "2.7k", "2.7k", "2.6k", "2.8k", "3.0k"] },
+  { name: "Cheddar Mature 20kg Block", shortName: "Cheddar Mature", values: ["1.5k", "1.4k", "1.6k", "1.5k", "1.7k", "1.8k"] },
+  { name: "Butter Unsalted Block", shortName: "Butter Unsalted Block", values: ["4.2k", "4.0k", "4.1k", "4.3k", "4.5k", "4.4k"] },
+  { name: "SMP Medium Heat", shortName: "SMP Medium Heat", values: ["800", "750", "820", "810", "850", "880"] },
+  { name: "WPC80 Instant", shortName: "WPC80 Instant", values: ["1.2k", "1.1k", "1.3k", "1.2k", "1.4k", "1.5k"] },
+  { name: "Rennet Casein", shortName: "Rennet Casein", values: ["500", "480", "520", "510", "550", "580"] },
 ]
 
-const forecastData = [
-  { month: "May 2026", s1A: 600, s1F: null, s2A: 420, s2F: null, s3A: 200, s3F: null },
-  { month: "Jun 2026", s1A: 615, s1F: null, s2A: 430, s2F: null, s3A: 225, s3F: null },
-  { month: "Jul 2026", s1A: 635, s1F: null, s2A: 445, s2F: null, s3A: 255, s3F: null },
-  { month: "Aug 2026", s1A: 680, s1F: null, s2A: 476, s2F: null, s3A: 332, s3F: null },
-  { month: "Sep 2026", s1A: 645, s1F: 675, s2A: 450, s2F: 468, s3A: 270, s3F: 312 },
-  { month: "Oct 2026", s1A: null, s1F: 650, s2A: null, s2F: 440, s3A: null, s3F: 280 },
-  { month: "Nov 2026", s1A: null, s1F: 620, s2A: null, s2F: 420, s3A: null, s3F: 230 },
-  { month: "Dec 2026", s1A: null, s1F: 598, s2A: null, s2F: 405, s3A: null, s3F: 186 },
-]
-
-const planningRows = [
-  ["Cheddar Mild", "2.9k", "2.7k", "2.7k", "2.6k", "-", "-"],
-  ["Cheddar Mature", "-", "-", "-", "-", "-", "-"],
-  ["Butter Unsalted Block", "-", "-", "-", "-", "-", "-"],
-  ["SMP Medium Heat", "-", "-", "-", "-", "-", "-"],
-  ["WPC80 Instant", "-", "-", "-", "-", "-", "-"],
-  ["Rennet Casein", "-", "-", "-", "-", "-", "-"],
-]
+const productColors = ["#4f855f", "#86bd97", "#284c33", "#d9d6cf", "#6f6b65", "#42413c"]
 
 function Icon({ src, alt = "", className = "" }: { src: string; alt?: string; className?: string }) {
   return <img src={src} alt={alt} className={className} />
 }
 
-function RangeSwitch({ items }: { items: string[] }) {
+function Divider({ className = "" }: { className?: string }) {
+  return <div className={`h-px w-full bg-divider ${className}`} />
+}
+
+function RangeSwitch({ items, selected, onSelect }: { items: string[]; selected?: string; onSelect?: (item: string) => void }) {
   return (
     <div className="flex items-center pr-px">
       {items.map((item, idx) => (
         <button
           key={item}
-          className={`-mr-px flex h-[34px] w-[34px] items-center justify-center border border-[#f5f5f5] bg-white text-[10px] leading-[18px] text-[#42413c] ${idx === 0 ? "rounded-l-[8px]" : ""} ${idx === items.length - 1 ? "rounded-r-[8px]" : ""}`}
+          onClick={() => onSelect?.(item)}
+          className={`-mr-px flex h-[34px] w-[34px] items-center justify-center border border-[#f5f5f5] text-[10px] leading-[18px] cursor-pointer transition-colors ${selected === item ? "bg-[#27251e] text-white border-[#27251e] z-10" : "bg-white text-[#42413c] hover:bg-[#fcfcfc]"} ${idx === 0 ? "rounded-l-[8px]" : ""} ${idx === items.length - 1 ? "rounded-r-[8px]" : ""}`}
         >
           {item}
         </button>
@@ -163,6 +232,9 @@ function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: 
 }
 
 function DemandOverviewCard() {
+  const [duration, setDuration] = useState("1Y")
+  const data = overviewDataSets[duration]
+
   return (
     <article className="overflow-hidden rounded-[12px] bg-white p-6">
       <div className="mb-4 flex items-end justify-between">
@@ -173,27 +245,35 @@ function DemandOverviewCard() {
           </div>
           <p className="text-[10px] text-black/56">Monthly demand vs budget across the selected product</p>
         </div>
-        <RangeSwitch items={["1W", "4W", "3M", "6M", "1Y"]} />
+        <RangeSwitch items={["1W", "4W", "3M", "6M", "1Y"]} selected={duration} onSelect={setDuration} />
       </div>
 
       <div className="h-[292px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={overviewData} margin={{ top: 8, right: 0, left: -12, bottom: 24 }}>
+          <ComposedChart data={data} margin={{ top: 8, right: 0, left: 0, bottom: 24 }}>
             <CartesianGrid vertical={false} stroke="#f0efec" />
             <XAxis dataKey="month" tick={{ fill: "#737373", fontSize: 12 }} tickLine={false} axisLine={false} dy={8} />
             <YAxis
-              domain={[0, 10000]}
-              ticks={[0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]}
+              domain={[0, "auto"]}
               tickLine={false}
               axisLine={false}
               tick={{ fill: "#737373", fontSize: 12 }}
-              width={34}
-              tickFormatter={(v: number) => (v === 0 ? "0" : `${Math.round(v / 1000)}K`)}
+              width={45}
+              tickFormatter={(v: number) => {
+                if (v === 0) return "0"
+                if (v >= 1000) return `${(v / 1000).toFixed(0)}K`
+                return v.toString()
+              }}
             />
             <Tooltip content={<ChartTooltip />} cursor={{ fill: "rgba(0,0,0,0.03)" }} />
-            <Legend verticalAlign="bottom" align="center" iconType="plainline" wrapperStyle={{ fontSize: "12px", color: "#0a0a0a", paddingTop: "12px" }} />
-            <Bar dataKey="totalDemand" name="Total Demand" fill="#86bd97" radius={[2, 2, 2, 2]} barSize={56} />
-            <Line dataKey="budget" name="Budget" type="linear" stroke="#284c33" strokeWidth={1} dot={{ r: 3.5, fill: "white", stroke: "#284c33", strokeWidth: 1 }} />
+            <Legend
+              verticalAlign="bottom"
+              align="center"
+              formatter={(value) => <span className="text-[#737373]">{value}</span>}
+              wrapperStyle={{ fontSize: "12px", paddingTop: "12px" }}
+            />
+            <Bar dataKey="totalDemand" name="Total Demand" fill="#86bd97" radius={[2, 2, 2, 2]} barSize={duration === "1Y" ? 24 : 56} legendType="square" isAnimationActive animationDuration={300} />
+            <Line dataKey="budget" name="Budget" type="linear" stroke="#284c33" strokeWidth={1} dot={{ r: 3.5, fill: "white", stroke: "#284c33", strokeWidth: 1 }} legendType="line" isAnimationActive animationDuration={300} />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
@@ -202,6 +282,9 @@ function DemandOverviewCard() {
 }
 
 function ForecastCard() {
+  const [duration, setDuration] = useState("1Y")
+  const data = forecastDataSets[duration]
+  
   return (
     <article className="overflow-hidden rounded-[12px] bg-white p-6">
       <div className="mb-4 space-y-4">
@@ -215,7 +298,7 @@ function ForecastCard() {
 
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-[10px]">
-            <button className="flex h-[34px] items-center gap-4 rounded-[8px] border border-[#f5f5f5] px-3 text-[12px] text-[#42413c]">
+            <button className="flex h-[34px] items-center gap-4 rounded-[8px] border border-[#f5f5f5] px-3 text-[12px] text-[#42413c] cursor-default">
               Total demand
               <CaretDown size={12} weight="light" color="#6f6b65" />
             </button>
@@ -230,29 +313,29 @@ function ForecastCard() {
           </div>
 
           <div className="flex items-center gap-2">
-            <RangeSwitch items={["1W", "4W", "3M", "6M", "1Y"]} />
-            <button className="flex h-[34px] items-center gap-1 rounded-[8px] border border-[#f5f5f5] px-3 text-[10px] text-[#42413c]">
+            <RangeSwitch items={["1W", "4W", "3M", "6M", "1Y"]} selected={duration} onSelect={setDuration} />
+            <button className="flex h-[34px] items-center gap-1 rounded-[8px] border border-[#f5f5f5] px-3 text-[10px] text-[#42413c] cursor-default">
               <InfinityIcon size={16} weight="light" color="#42413c" /> CI
             </button>
-            <button className="flex h-[34px] w-[34px] items-center justify-center rounded-[8px] border border-[#f5f5f5]"><DownloadSimple size={16} weight="light" color="#42413c" /></button>
-            <button className="flex h-[34px] items-center gap-1 rounded-[8px] border border-[#f5f5f5] px-3 text-[10px] text-[#42413c]"><CornersIn size={16} weight="light" color="#42413c" /> Close</button>
+            <button className="flex h-[34px] w-[34px] items-center justify-center rounded-[8px] border border-[#f5f5f5] cursor-default"><DownloadSimple size={16} weight="light" color="#42413c" /></button>
+            <button className="flex h-[34px] items-center gap-1 rounded-[8px] border border-[#f5f5f5] px-3 text-[10px] text-[#42413c] cursor-default"><CornersIn size={16} weight="light" color="#42413c" /> Close</button>
           </div>
         </div>
       </div>
 
       <div className="h-[240px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={forecastData} margin={{ top: 6, right: 0, left: -12, bottom: 0 }}>
+          <ComposedChart data={data} margin={{ top: 6, right: 0, left: 0, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke="#f5f5f5" />
             <XAxis dataKey="month" tick={{ fill: "#727272", fontSize: 12 }} tickLine={false} axisLine={false} />
-            <YAxis domain={[0, 1000]} ticks={[0, 200, 400, 600, 800, 1000]} tick={{ fill: "#525252", fontSize: 12 }} tickLine={false} axisLine={false} width={34} />
+            <YAxis domain={[0, 1000]} ticks={[0, 200, 400, 600, 800, 1000]} tick={{ fill: "#525252", fontSize: 12 }} tickLine={false} axisLine={false} width={45} />
             <Tooltip content={<ChartTooltip />} cursor={{ stroke: "#d9d6cf", strokeDasharray: "3 3" }} />
-            <Line dataKey="s1A" type="linear" name="Series 1" stroke="#4f855f" strokeWidth={2} dot={false} />
-            <Line dataKey="s1F" type="linear" name="Series 1 Forecast" stroke="#4f855f" strokeWidth={2} strokeDasharray="4 4" dot={false} />
-            <Line dataKey="s2A" type="linear" name="Series 2" stroke="#4b7a5a" strokeWidth={2} dot={false} />
-            <Line dataKey="s2F" type="linear" name="Series 2 Forecast" stroke="#4b7a5a" strokeWidth={2} strokeDasharray="4 4" dot={false} />
-            <Line dataKey="s3A" type="linear" name="Series 3" stroke="#3f6f4e" strokeWidth={2} dot={false} />
-            <Line dataKey="s3F" type="linear" name="Series 3 Forecast" stroke="#3f6f4e" strokeWidth={2} strokeDasharray="4 4" dot={false} />
+            <Line dataKey="s1A" type="linear" name="Series 1" stroke="#4f855f" strokeWidth={2} dot={false} connectNulls animationDuration={300} />
+            <Line dataKey="s1F" type="linear" name="Series 1 Forecast" stroke="#4f855f" strokeWidth={2} strokeDasharray="4 4" dot={false} connectNulls animationDuration={300} />
+            <Line dataKey="s2A" type="linear" name="Series 2" stroke="#4b7a5a" strokeWidth={2} dot={false} connectNulls animationDuration={300} />
+            <Line dataKey="s2F" type="linear" name="Series 2 Forecast" stroke="#4b7a5a" strokeWidth={2} strokeDasharray="4 4" dot={false} connectNulls animationDuration={300} />
+            <Line dataKey="s3A" type="linear" name="Series 3" stroke="#3f6f4e" strokeWidth={2} dot={false} connectNulls animationDuration={300} />
+            <Line dataKey="s3F" type="linear" name="Series 3 Forecast" stroke="#3f6f4e" strokeWidth={2} strokeDasharray="4 4" dot={false} connectNulls animationDuration={300} />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
@@ -260,7 +343,7 @@ function ForecastCard() {
   )
 }
 
-function PlanningCard() {
+function PlanningCard({ selectedProduct }: { selectedProduct: string }) {
   return (
     <article className="overflow-hidden rounded-[12px] border border-[#fafafa] bg-white p-6">
       <div className="mb-4 flex items-center justify-between">
@@ -272,8 +355,8 @@ function PlanningCard() {
           <p className="text-[10px] text-black/56">View and adjust demand overlays per SKU</p>
         </div>
         <div className="flex items-center gap-2">
-          <button className="flex h-[34px] items-center gap-4 rounded-[8px] border border-[#f5f5f5] px-3 text-[12px] text-[#42413c]"><span className="flex items-center gap-2"><BuildingOfficeIcon size={16} weight="light" color="#42413c" />All accounts</span><CaretDown size={12} weight="light" color="#6f6b65" /></button>
-          <button className="flex h-[34px] items-center gap-4 rounded-[8px] border border-[#f5f5f5] px-3 text-[12px] text-[#42413c]"><span className="flex items-center gap-2"><Package size={16} weight="light" color="#42413c" />All SKUs</span><CaretDown size={12} weight="light" color="#6f6b65" /></button>
+          <button className="flex h-[34px] items-center gap-4 rounded-[8px] border border-[#f5f5f5] px-3 text-[12px] text-[#42413c] cursor-default"><span className="flex items-center gap-2"><BuildingOfficeIcon size={16} weight="light" color="#42413c" />All accounts</span><CaretDown size={12} weight="light" color="#6f6b65" /></button>
+          <button className="flex h-[34px] items-center gap-4 rounded-[8px] border border-[#f5f5f5] px-3 text-[12px] text-[#42413c] cursor-default"><span className="flex items-center gap-2"><Package size={16} weight="light" color="#42413c" />All SKUs</span><CaretDown size={12} weight="light" color="#6f6b65" /></button>
         </div>
       </div>
 
@@ -294,11 +377,16 @@ function PlanningCard() {
             </tr>
           </thead>
           <tbody>
-            {planningRows.map((row) => (
-              <tr key={row[0]}>
-                <td className="h-[72px] border-b border-[#e2e2e2] px-6 text-[14px] leading-[1.3] text-[#1e1e1e]">{row[0]}</td>
-                {row.slice(1).map((value, idx) => (
-                  <td key={`${row[0]}-${idx}`} className="h-[72px] border-b border-[#e2e2e2] px-6 text-[14px] leading-[1.3] text-[#5e5e5e]">{value}</td>
+            {planningItems.map((item, idx) => (
+              <tr key={item.name} className={selectedProduct === item.name ? "bg-[#f5f9f6]" : ""}>
+                <td className="h-[72px] border-b border-[#e2e2e2] px-6 text-[14px] leading-[1.3] text-[#1e1e1e]">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 shrink-0 rounded-[2px]" style={{ backgroundColor: productColors[idx % productColors.length] }} />
+                    {item.shortName}
+                  </div>
+                </td>
+                {item.values.map((value, vIdx) => (
+                  <td key={`${item.name}-${vIdx}`} className="h-[72px] border-b border-[#e2e2e2] px-6 text-[14px] leading-[1.3] text-[#5e5e5e]">{value}</td>
                 ))}
               </tr>
             ))}
@@ -333,7 +421,7 @@ function LeftSidebar({ collapsed, onToggle, onAssistantClick }: { collapsed: boo
             <button onClick={onAssistantClick} className="flex w-full justify-center rounded-[8px] px-3 py-2 cursor-pointer"><img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" /></button>
           </div>
 
-          <Icon src={assets.dividerCollapsed} className="h-px w-full" />
+          <Divider />
 
           <div className="space-y-2">
             <button className="flex w-full justify-center rounded-[8px] bg-[#27251e] p-2"><Globe size={20} weight="light" color="white" /></button>
@@ -342,7 +430,7 @@ function LeftSidebar({ collapsed, onToggle, onAssistantClick }: { collapsed: boo
             <button className="flex w-full justify-center rounded-[8px] p-2"><CalendarDots size={20} weight="light" color="#6d6963" /></button>
           </div>
 
-          <Icon src={assets.dividerCollapsed} className="h-px w-full" />
+          <Divider />
 
           <div className="space-y-2">
             <button className="flex w-full justify-center rounded-[8px] px-3 py-2"><ClockCounterClockwise size={20} weight="light" color="#6d6963" /></button>
@@ -371,7 +459,7 @@ function LeftSidebar({ collapsed, onToggle, onAssistantClick }: { collapsed: boo
           <button onClick={onAssistantClick} className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c] cursor-pointer"> <img src="/daisy-ai.svg" alt="Daisy AI Logo" className="size-[20px]" />AI Assistant</button>
         </div>
 
-        <Icon src={assets.divider} className="h-px w-full" />
+        <Divider />
 
         <div className="space-y-2">
           <button className="flex w-full items-center gap-2 rounded-[8px] bg-[#27251e] px-3 py-2 text-[13px] font-medium text-white"><Globe size={20} weight="light" color="white" />Demand</button>
@@ -380,7 +468,7 @@ function LeftSidebar({ collapsed, onToggle, onAssistantClick }: { collapsed: boo
           <button className="flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-[13px] font-medium text-[#42413c]"><CalendarDots size={20} weight="light" color="#6d6963" />Master Schedule</button>
         </div>
 
-        <Icon src={assets.divider} className="h-px w-full" />
+        <Divider />
 
         <div className="min-h-0 flex-1">
           <div className="mb-2 flex items-center justify-between rounded-[8px] px-3 py-2">
@@ -400,26 +488,75 @@ function LeftSidebar({ collapsed, onToggle, onAssistantClick }: { collapsed: boo
   )
 }
 
-function CenterHeader({ width }: { width: number }) {
+function CenterHeader({ selectedProduct, onSelect }: { selectedProduct: string; onSelect: (name: string) => void }) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [isExportOpen, setIsExportOpen] = useState(false)
   return (
-    <header className="h-[58px] border-b border-[#ebe8e4] bg-white px-4 py-3">
-      <div className="mx-auto flex h-full w-full items-center justify-between" style={{ maxWidth: `${width}px` }}>
+    <header className="relative h-[58px] border-b border-[#ebe8e4] bg-white px-4 py-3 z-30">
+      <div className="mx-auto flex h-full w-full items-center justify-between">
         <div className="space-y-[2px] leading-none">
           <p className="text-[12px] font-medium text-black">Demand</p>
           <p className="text-[10px] text-black/56">Week 15, April 2026</p>
         </div>
 
-        <button className="flex items-center gap-4 text-[12px] font-medium text-black">
-          Cheddar Milk 20kg Block
-          <CaretDown size={12} weight="light" color="#6f6b65" />
-        </button>
+        <div className="relative">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex items-center gap-4 text-[12px] font-medium text-black cursor-pointer"
+          >
+            {selectedProduct}
+            <CaretDown size={12} weight="light" color="#6f6b65" className={isOpen ? "rotate-180 transition-transform" : "transition-transform"} />
+          </button>
+
+          {isOpen && (
+            <div className="absolute left-1/2 top-full mt-2 w-64 -translate-x-1/2 rounded-lg border border-[#ebe8e4] bg-white p-1 shadow-lg">
+              {planningItems.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => {
+                    onSelect(item.name)
+                    setIsOpen(false)
+                  }}
+                  className={`flex w-full items-center px-3 py-2 text-left text-[12px] hover:bg-[#f5f5f5] rounded-md ${selectedProduct === item.name ? "bg-[#f5f5f5] font-medium" : ""}`}
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         <div className="flex items-center gap-4">
           <DotsThree size={16} weight="light" color="#7a766f" />
-          <button className="flex items-center gap-3 rounded-[8px] border border-[#f5f5f5] bg-[#27251e] px-3 py-2 text-[12px] text-white">
-            <DownloadSimple size={16} weight="light" color="white" />Export
-          </button>
-          <div className="h-[29px] w-px bg-[#f5f5f5]" />
+          <div className="relative">
+            <button 
+              onClick={() => setIsExportOpen(!isExportOpen)}
+              className="flex items-center gap-3 rounded-[8px] border border-[#f5f5f5] bg-[#27251e] px-3 py-2 text-[12px] text-white cursor-pointer"
+            >
+              <DownloadSimple size={16} weight="light" color="white" />Export
+            </button>
+            
+            {isExportOpen && (
+              <div className="absolute right-0 top-full mt-2 w-72 rounded-lg border border-[#ebe8e4] bg-white p-2 shadow-xl ring-1 ring-black/5 animate-in fade-in slide-in-from-top-1">
+                <p className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-[#9a9a9a]">Export Options</p>
+                <div className="space-y-1">
+                  {[
+                    { label: "Detailed SKU Breakdown", desc: "Excel (.xlsx) for SKU planning", icon: <FileText size={16} /> },
+                    { label: "Supply Chain Raw Data", desc: "CSV format for logistics modeling", icon: <DownloadSimple size={16} /> },
+                  ].map((opt) => (
+                    <button key={opt.label} onClick={() => setIsExportOpen(false)} className="flex w-full items-start gap-3 rounded-md px-3 py-2 text-left hover:bg-[#f5f5f5] transition-colors cursor-pointer">
+                      <div className="mt-0.5 text-[#6f6b65]">{opt.icon}</div>
+                      <div>
+                        <p className="text-[12px] font-medium text-[#1a1a1a]">{opt.label}</p>
+                        <p className="text-[10px] text-[#7a766f]">{opt.desc}</p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="h-[29px] w-px bg-divider" />
           <div className="grid size-8 place-items-center rounded-[32px] bg-[#ccf3d8] text-[12px] font-medium text-[#413f3f]">KR</div>
         </div>
       </div>
@@ -536,29 +673,28 @@ export default function Page() {
   const [collapsed, setCollapsed] = useState(true)
   const [assistantMode, setAssistantMode] = useState<AssistantMode>("float")
   const [chatInput, setChatInput] = useState("")
+  const [selectedProduct, setSelectedProduct] = useState(planningItems[0].name)
 
   const leftWidth = collapsed ? 62 : 204
   const rightWidth = assistantMode === "sidebar" ? 320 : 0
-  const centerWidth = 1440 - leftWidth - rightWidth
-  const contentWidth = assistantMode === "float" ? centerWidth - 208 : 852
 
   return (
-    <main className="h-screen overflow-x-auto border-2 border-[#ebe8e4] bg-white text-[#42413c] [color-scheme:light]">
-      <div className="mx-auto relative flex h-full min-w-[1440px] max-w-[1440px]">
+    <main className="h-screen overflow-hidden border-2 border-[#ebe8e4] bg-white text-[#42413c] [color-scheme:light]">
+      <div className="relative flex h-full w-full">
         <LeftSidebar
           collapsed={collapsed}
           onToggle={() => setCollapsed((v) => !v)}
           onAssistantClick={() => setAssistantMode((m) => (m === "sidebar" ? "float" : "sidebar"))}
         />
 
-        <section className="flex h-full flex-col" style={{ width: `${centerWidth}px`, minWidth: `${centerWidth}px` }}>
-          <CenterHeader width={contentWidth} />
+        <section className="flex h-full flex-1 flex-col overflow-hidden">
+          <CenterHeader selectedProduct={selectedProduct} onSelect={setSelectedProduct} />
 
           <div className="flex-1 overflow-y-auto bg-[#FBFAF9]">
-            <div className="mx-auto flex w-full flex-col gap-[10px] px-8 py-8" style={{ maxWidth: `${contentWidth}px` }}>
+            <div className="mx-auto flex w-full flex-col gap-[10px] px-8 py-8">
               <DemandOverviewCard />
               <ForecastCard />
-              <PlanningCard />
+              <PlanningCard selectedProduct={selectedProduct} />
             </div>
           </div>
         </section>
